@@ -234,7 +234,7 @@
             const closeModalAnimator = (modalEl, contentEl) => { contentEl.classList.remove('modal-enter-active'); contentEl.classList.add('modal-exit-active'); setTimeout(() => { modalEl.classList.add('hidden'); contentEl.classList.remove('modal-exit-active'); contentEl.classList.add('modal-enter'); }, 300); };
             const openTransactionModal = (transactionId = null) => { transactionForm.reset(); const idInput = document.getElementById('transaction-id'); if (transactionId) { modalTitle.textContent = '거래 내역 수정'; const transactionToEdit = transactions.find(t => t.id === transactionId); if (transactionToEdit) { idInput.value = transactionToEdit.id; document.querySelector(`input[name="type"][value="${transactionToEdit.type}"]`).checked = true; document.getElementById('description').value = transactionToEdit.description; document.getElementById('amount').value = transactionToEdit.amount; document.getElementById('date').value = transactionToEdit.date; updateCategoryOptions(); document.getElementById('category').value = transactionToEdit.category; updateSubcategoryOptions(); if (transactionToEdit.subcategory) { document.getElementById('subcategory').value = transactionToEdit.subcategory; } } } else { modalTitle.textContent = '새 거래 내역'; idInput.value = ''; document.getElementById('date').value = new Date().toISOString().split('T')[0]; updateCategoryOptions(); } openModalAnimator(modal, modalContent); };
             const closeTransactionModal = () => closeModalAnimator(modal, modalContent);
-            const openSettingsModal = () => { fileNameDisplay.textContent = ''; importFileInput.value = ''; openModalAnimator(settingsModal, settingsModalContent); };
+            const openSettingsModal = () => { fileNameDisplay.textContent = ''; importFileInput.value = ''; renderAccountInfo(auth.currentUser); openModalAnimator(settingsModal, settingsModalContent); };
             const closeSettingsModal = () => closeModalAnimator(settingsModal, settingsModalContent);
             const openCategoryModal = (type) => { categoryModalContext.type = type; addCategoryForm.reset(); if (type === 'main') { categoryModalTitle.textContent = '새 기본 카테고리'; } else { const selectedMainCategory = categorySelect.value; categoryModalTitle.textContent = `'${selectedMainCategory}'의 세부 카테고리`; } openModalAnimator(categoryModal, categoryModalContent); };
             const closeCategoryModal = () => closeModalAnimator(categoryModal, categoryModalContent);
@@ -276,31 +276,13 @@
             emailPasswordForm.addEventListener('submit', handleEmailPasswordAuth);
 
             // --- 앱 초기화 ---
-            getRedirectResult(auth)
-                .catch((error) => {
-                    console.error("Google redirect sign in error", error);
-                     const loadingSpinner = loadingOverlay.querySelector('svg');
-                    if(loadingSpinner) loadingSpinner.style.display = 'none';
-                     let title = "로그인 오류!";
-                    let message = `로그인 중 오류가 발생했습니다: ${error.message}`;
-                    if (error.code === 'auth/account-exists-with-different-credential') {
-                        message = '이미 다른 방식으로 가입된 이메일입니다. 다른 로그인 방식을 사용해주세요.';
-                    } else if (error.code === 'auth/unauthorized-domain') {
-                         title = "도메인 승인 필요!";
-                        message = `현재 앱의 도메인이 Firebase에 등록되지 않았습니다.<br><br>
-                                   <strong class="font-bold">Firebase 콘솔 &gt; Authentication &gt; Settings &gt; 승인된 도메인</strong><br>
-                                   메뉴에서 '도메인 추가'를 누르고<br>
-                                   아래 도메인을 추가해주세요:<br>
-                                   <code class="bg-gray-200 dark:bg-gray-700 p-1 rounded mt-1 inline-block">${window.location.hostname}</code>`;
-                    }
-                    loadingText.innerHTML = `<div class="text-center p-4"><h2 class="text-xl font-bold text-red-600 mb-4">${title}</h2><p class="text-gray-600 dark:text-gray-400 mt-2 text-sm">${message}</p></div>`;
-                });
-
             onAuthStateChanged(auth, async (user) => {
+                renderAccountInfo(user);
+                
                 if (user) {
                     if (currentUserId === user.uid) return;
                     currentUserId = user.uid;
-                    renderAccountInfo(user);
+                    
                     if(user.isAnonymous) {
                         await initializeUserData();
                     }
@@ -327,6 +309,11 @@
                         loadingText.innerHTML = `<div class="text-center p-4"><h2 class="text-xl font-bold text-red-600 mb-4">${title}</h2><p class="text-gray-600 dark:text-gray-400 mt-2 text-sm">${message}</p></div>`;
                     });
                 }
+            });
+
+            getRedirectResult(auth).catch((error) => {
+                    console.error("Google redirect sign in error", error);
+                    alert(`로그인 중 오류가 발생했습니다: ${error.message}`);
             });
             
             document.addEventListener('DOMContentLoaded', () => {
