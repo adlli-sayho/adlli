@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+     <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -166,7 +166,7 @@
         // Firebase SDK (Software Development Kit)를 불러옵니다.
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getFirestore, collection, doc, getDoc, setDoc, addDoc, onSnapshot, deleteDoc, updateDoc, writeBatch } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged, GoogleAuthProvider, EmailAuthProvider, linkWithCredential, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged, GoogleAuthProvider, EmailAuthProvider, linkWithCredential, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithRedirect, getRedirectResult } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
         // ===================================================================================
         const firebaseConfig = {
@@ -242,7 +242,7 @@
             const handleDeleteTransaction = async (id) => { await deleteDoc(doc(db, `users/${currentUserId}/transactions/${id}`)); };
             const handleFormSubmit = async (event) => { event.preventDefault(); const id = event.target.elements['transaction-id'].value; const transactionData = { type: event.target.elements.type.value, description: event.target.elements.description.value, amount: +event.target.elements.amount.value, date: event.target.elements.date.value, category: event.target.elements.category.value, subcategory: event.target.elements.subcategory.value || null }; if (id) { const docRef = doc(db, `users/${currentUserId}/transactions/${id}`); await updateDoc(docRef, transactionData); } else { await addDoc(getRefs().transactionsCol, transactionData); } closeTransactionModal(); };
             const handleFileImport = (event) => { const file = event.target.files[0]; if (!file) return; fileNameDisplay.textContent = `"${file.name}" 파일이 선택되었습니다.`; setTimeout(() => { alert(`[시뮬레이션] 파일 가져오기 기능은 Firebase 연동 후에는 지원되지 않습니다.`); closeSettingsModal(); }, 500); };
-            const handleGoogleSignIn = async () => { const provider = new GoogleAuthProvider(); try { const userCredential = await signInWithPopup(auth, provider); closeModalAnimator(authModal, authModalContent); } catch(error) { if (error.code === 'auth/credential-already-in-use') { alert('이미 다른 계정에 연결된 구글 계정입니다.'); } else { console.error("Google sign in error", error); } } };
+            const handleGoogleSignIn = async () => { const provider = new GoogleAuthProvider(); signInWithRedirect(auth, provider); };
             const handleEmailPasswordAuth = async (e) => { e.preventDefault(); const email = document.getElementById('email-input').value; const password = document.getElementById('password-input').value; try { const userCredential = await signInWithEmailAndPassword(auth, email, password); closeModalAnimator(authModal, authModalContent); } catch(error) { if (error.code === 'auth/user-not-found') { try { const userCredential = await createUserWithEmailAndPassword(auth, email, password); closeModalAnimator(authModal, authModalContent); } catch (createError) { alert(`회원가입 실패: ${createError.message}`); } } else if (error.code === 'auth/wrong-password') { alert('비밀번호가 틀렸습니다.'); } else { console.error("Email auth error", error); alert(`오류 발생: ${error.message}`); } } };
             
             // --- 이벤트 리스너 설정 ---
@@ -277,6 +277,16 @@
             emailPasswordForm.addEventListener('submit', handleEmailPasswordAuth);
 
             // --- 앱 초기화 ---
+            getRedirectResult(auth)
+                .catch((error) => {
+                    console.error("Google redirect sign in error", error);
+                    if (error.code === 'auth/account-exists-with-different-credential') {
+                        alert('이미 다른 방식으로 가입된 이메일입니다. 다른 로그인 방식을 사용해주세요.');
+                    } else {
+                        alert(`로그인 중 오류가 발생했습니다: ${error.message}`);
+                    }
+                });
+
             onAuthStateChanged(auth, async (user) => {
                 if (user) {
                     if (currentUserId === user.uid) return;
