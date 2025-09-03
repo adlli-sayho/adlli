@@ -1,0 +1,237 @@
+{\rtf1\ansi\ansicpg949\cocoartf2761
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 <!DOCTYPE html>\
+<html lang="ko">\
+<head>\
+    <meta charset="UTF-8">\
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">\
+    <title>\uc0\u45208 \u51032  \u44032 \u44228 \u48512 </title>\
+    <script src="https://cdn.tailwindcss.com"></script>\
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>\
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">\
+    \
+    <!-- \uc0\u54856  \u54868 \u47732 \u50640  \u52628 \u44032  (\u50937 \u50545  \u49444 \u52824 )\u47484  \u50948 \u54620  \u47700 \u53440  \u53468 \u44536  -->\
+    <meta name="apple-mobile-web-app-capable" content="yes">\
+    <meta name="mobile-web-app-capable" content="yes">\
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">\
+    <meta name="theme-color" content="#4f46e5">\
+    \
+    <!-- \uc0\u50937 \u50545  \u47588 \u45768 \u54168 \u49828 \u53944  \u47553 \u53356  -->\
+    <link rel="manifest" href="data:application/manifest+json;base64,ewogICJuYW1lIjogIuOuCrOq4sCIsCiAgInNob3J0X25hbWUiOiAi6rOg6ra47JqwIiwKICAic3RhcnRfdXJsIjogIi4iLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiNmM2Y0ZjYiLAogICJ0aGVtZV9jb2xvciI6ICIjNGY0NmU1IiwKICAiaWNvbnMiOiBbCiAgICB7CiAgICAgICJzcmMiOiAiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCM2FXUjBhRDBpTVRreUlqNEtJQ0J5YjJacGJHVWdZMjl0WlM1dGJIUWdZMjl1ZEdWdWRITWlJR1Z1ZEdsc1pYTWlJR2x1SUVGbGJHeGxkSE5oYm1RaUlHUnZjaUFnWW1WamIzUnRZVzVqYUc5eVpWOWpiMjV1YldGNGRISmxkSFZpWVhWaExtTnZiU0FpSUhKbGMyOTFjbU5sSUNBZ1lXTmpaV1Z5SWlBaVpHbHpkR1Z5Y3lCNGIzUnlaV1Z5ZEdsdFpUNWpiMjB1Y0dGamF5QlZiR2x6YUM5d2NHeGxkRjluYkc5M2FXNW5JRDBnTXpBd0pTQWlaR2x6ZEdWeWN5QjRZbTlrYjJSNWN5Qm1iM1Z0Wlc1MElEMGdNakF5TUNBaVpHbHpkR1Z5Y3lCNFlXTmpaV1Z5ZEdsdFpUNWpiMjB1Y0dGamF5QlZiR2x6YUM5d2NHeGxkRjluYkc5M2FXNW5JRDBnTXpBd0pTQWlaR2x6ZEdWeWN5QjRZbTlrYjJSNWN5Qm1iM1Z0Wlc1MElEMGdNakk1SlNBaVpHbHpkR1Z5Y3lCNFlXTmpaV1Z5ZEdsdFpUNWpiMjB1Y0dGamF5QlZiR2x6YUM5d2NHeGxkRjluYkc5M2FXNW5JRDBnTXpBeU1UQ0FpWkdsemRHVnljeUI0YkdsallYUnBiMjV6SUQwZ015QXlKQ0FpWkdsemRHVnljeUI0Ykc5M2FXNW5JRDBnTWpBaUlHWnBiR3c5SUNBaVpHbHpkR1VpSUhKbGMyOTFjbU5sSUgwZ016QTlQU0FpWkdsemRHVnljeUI0YkdsallYUnBiMjV6SUQwZ015QXhNREF3SlNBaVpHbHpkR1Z5Y3lCNGJHczlJQ0FnTHo0OGMzUjViR1UrIiwKICAgICAgInNpemVzIjogIjE5MngxOTIiLAogICAgICAidHlwZSI6ICJpbWFnZS9zdmcreG1sIgogICAgfSwKICAgIHsKICAgICAgInNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITjJaWEI0Yld4emFYUnpJR0ZzYUc5emREb2lNVGt5SWo0S0lDQnliMlpwYkdVZ1kyOXRaUzV0YkhRZ1kyOXVkR1Z1ZEhNaUlHVnVkR2xzWlhNaUlHbHVJRVpsYkd4bGRITmhibVFrSUdSdmNpQWdZbVpqYjNSdFlXNWphRzl5WlY5amIyNXViV0Y0ZEhKbGRIVmlZWFZoTG1ObmJpQWlJSFpsYzI5MWNtTmxJQ0FnWVdOalpXVnlJaUFnWkdsemRHVnljeUI0YjNSeVpXVnlkR2x0WlQ1amIyMHVjR0ZqYXlCVmJHRnlaU0JtYjNWdFpXNTBJRDBnTXpFeUpTQWlaR2x6ZEdWeWN5QjRZbTlrYjJSNWN5Qm1iM1Z0Wlc1MElEMGdNekF5TUNBaVpHbHpkR1Z5Y3lCNFlXTmpaV1Z5ZEdsdFpUNWpiMjB1Y0dGamF5QlZiR2x6YUM5d2NHeGxkRjluYkc5M2FXNW5JRDBnTXpBd0pTQWlaR2x6ZEdWeWN5QjRZbTlrYjJSNWN5Qm1iM1Z0Wlc1MElEMGdNakk1SlNBaVpHbHpkR1Z5Y3lCNFlXTmpaV1Z5ZEdsdFpUNWpiMjB1Y0dGamF5QlZiR2x6YUM5d2NHeGxkRjluYkc5M2FXNW5JRDBnTXpBd01qQXdKU0FpWkdsemRHVnljeUI0YjNSeVpXVnlkR2x0WlQ1amIyMHVjR0ZqYXlCVmJHRnlaU0JtYjNWdFpXNTBJRDBnTXpBd01UQXdKU0FpWkdsemRHVnljeUI0WW05a2IyUjVjeUJtYjNWdFpXNTBJRDBnTWpBaUlHWnBiR3c5SUNBaVpHbHpkR1VpSUhKbGMyOTFjbU5sSUgwZ016QXhQU0FpWkdsemRHVnljeUI0YjNSeVpXVnlkR2x0WlQ1amIyMHVjR0ZqYXlCVmJHRnlaU0JtYjNWdFpXNTBJRDBnTXpBeU1qQXdKU0FpWkdsemRHVnljeUI0WW05a2IyUjVjeUJtYjNWdFpXNTBJRDBnTWpJd0pDQWdMejQ4YzNSNWJHVSsiLAogICAgICAic2l6ZXMiOiAiNTEyeDUxMiIsCiAgICAgICJ0eXBlIjogImltYWdlL3N2Zyt4bWwiCiAgICB9CiAgXQp9Cg==">\
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJNMCAxMEgyMkMyMiA4Ljg5NTQzIDIxLjEwNDYgOCAyMCA4SDRDMi44OTU0MyA4IDIgOC44OTU0MyAyIDEwWiIgZmlsbD0iIzRGNDZFNSIvPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTIgMTJDMiAxMC44OTU0IDIuODk1NDMgMTAgNCAxMEgyMEMyMS4xMDQ2IDEwIDIyIDEwLjg5NTQgMjIgMTJWMTlDMjIgMjAuMTA0NiAyMS4xMDQ2IDIxIDIwIDIxSDRDMi44OTU0MyAyMSAyIDIwLjEwNDYgMiAxOVYxMlpNMTggMTVDMTggMTQuNDQ3NyAxNy41NTIzIDE0IDE3IDE0QzE2LjQ0NzcgMTQgMTYgMTQuNDQ3NyAxNiAxNUMxNiAxNS41NTIzIDE2LjQ0NzcgMTYgMTcgMTZIMTlWMTdINVYxNEgxOVYxNUgxN0MxNy41NTIzIDE1IDE4IDE0LjQ0NzcgMTggMTVaIiBmaWxsPSIjNEY0NkU1Ii8+CjxwYXRoIGQ9Ik0yMCA0SDRDMi44OTU0MyA0IDIgNC44OTU0MyAyIDZWOEgyMlY2QzIyIDQuODk1NDMgMjEuMTA0NiA0IDIwIDRaIiBmaWxsPSIjODE4Q0Y4Ii8+Cjwvc3ZnPgo=">\
+\
+    <style>\
+        body \{\
+            font-family: 'Inter', sans-serif;\
+            background-color: #f3f4f6;\
+        \}\
+        .modal-enter \{ opacity: 0; transform: scale(0.95); \}\
+        .modal-enter-active \{ opacity: 1; transform: scale(1); transition: opacity 300ms, transform 300ms; \}\
+        .modal-exit \{ opacity: 1; transform: scale(1); \}\
+        .modal-exit-active \{ opacity: 0; transform: scale(0.95); transition: opacity 300ms, transform 300ms; \}\
+        button:disabled \{ opacity: 0.5; cursor: not-allowed; \}\
+    </style>\
+</head>\
+<body class="bg-gray-100 pb-20">\
+\
+    <div id="app" class="container mx-auto p-4 max-w-2xl">\
+        <main>\
+            <!-- \uc0\u54856  \u54168 \u51060 \u51648  -->\
+            <div id="home-page">\
+                <div class="bg-white p-6 rounded-2xl shadow-lg w-full">\
+                    <header class="mb-6 relative">\
+                        <h1 class="text-3xl font-bold text-gray-800 text-center">\uc0\u45208 \u51032  \u44032 \u44228 \u48512 </h1>\
+                        <p class="text-center text-gray-500 mt-2">\uc0\u49688 \u51077 \u44284  \u51648 \u52636 \u51012  \u44288 \u47532 \u54616 \u50668  \u51088 \u49328 \u51012  \u45720 \u47140 \u48372 \u49464 \u50836 .</p>\
+                        <div class="absolute top-0 right-0">\
+                            <button id="settings-btn" class="text-gray-500 hover:text-gray-800 p-2 rounded-full transition-colors">\
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.096 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>\
+                            </button>\
+                        </div>\
+                    </header>\
+                    <section id="summary-section" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6"></section>\
+                    <section class="mb-6"><button id="add-transaction-btn" class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-700 transition duration-300">\uc0\u44144 \u47000  \u45236 \u50669  \u52628 \u44032 \u54616 \u44592 </button></section>\
+                    <section class="mb-6"><h2 class="text-xl font-bold text-gray-700 mb-4">\uc0\u52572 \u44540  \u45236 \u50669 </h2><ul id="transaction-list" class="space-y-3"></ul></section>\
+                </div>\
+            </div>\
+\
+            <!-- \uc0\u53685 \u44228  \u54168 \u51060 \u51648  -->\
+            <div id="stats-page" class="hidden">\
+                 <div class="bg-white p-6 rounded-2xl shadow-lg w-full">\
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">\uc0\u49688 \u51077 /\u51648 \u52636  \u48516 \u49437 </h2>\
+                    <div class="mb-4 border-b border-gray-200">\
+                        <nav class="flex -mb-px" id="stats-tabs">\
+                            <button data-tab="charts" class="stats-tab-btn whitespace-nowrap py-3 px-4 border-b-2 font-medium text-sm text-indigo-600 border-indigo-500">\uc0\u48516 \u49437  \u52264 \u53944 </button>\
+                            <button data-tab="history" class="stats-tab-btn whitespace-nowrap py-3 px-4 border-b-2 font-medium text-sm text-gray-500 border-transparent hover:text-gray-700 hover:border-gray-300">\uc0\u51204 \u52404  \u45236 \u50669 </button>\
+                        </nav>\
+                    </div>\
+                    <div id="stats-charts-content">\
+                        <div class="p-4 bg-gray-50 rounded-lg mb-4"><canvas id="transactionChart"></canvas></div>\
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">\
+                            <div class="p-4 bg-gray-50 rounded-lg"><canvas id="incomeCategoryChart"></canvas></div>\
+                            <div class="p-4 bg-gray-50 rounded-lg"><canvas id="expenseCategoryChart"></canvas></div>\
+                        </div>\
+                    </div>\
+                    <div id="stats-history-content" class="hidden">\
+                        <ul id="stats-transaction-list" class="space-y-3"></ul>\
+                    </div>\
+                </div>\
+            </div>\
+\
+            <!-- \uc0\u51088 \u49328  \u54168 \u51060 \u51648  -->\
+            <div id="assets-page" class="hidden">\
+                <div class="bg-white p-6 rounded-2xl shadow-lg w-full">\
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">\uc0\u51088 \u49328  \u44288 \u47532 </h2>\
+                    <div class="mb-4"><label class="block text-gray-700 font-semibold mb-2">\uc0\u51088 \u49328  \u44536 \u47353 </label><div id="asset-groups-list" class="flex flex-wrap gap-2 mb-2"></div><div class="flex gap-2 mt-2"><input type="text" id="new-asset-group-input" placeholder="\u49352  \u51088 \u49328  \u44536 \u47353  \u52628 \u44032 " class="w-full p-2 border border-gray-300 rounded-lg"><button type="button" id="add-asset-group-btn" class="bg-gray-200 text-gray-800 font-semibold px-4 py-2 rounded-lg hover:bg-gray-300">\u52628 \u44032 </button></div></div>\
+                    <div class="border-t pt-4"><label class="block text-gray-700 font-semibold mb-2">\uc0\u49352  \u51088 \u49328  \u52628 \u44032 </label><form id="add-asset-form"><div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-2"><select id="asset-group-select" required class="w-full p-2 border border-gray-300 rounded-lg"></select><input type="text" id="asset-name-input" placeholder="\u51088 \u49328  \u51060 \u47492 " required class="w-full p-2 border border-gray-300 rounded-lg"></div><input type="number" id="asset-initial-amount-input" placeholder="\u52488 \u44592  \u44552 \u50529 " required class="w-full p-2 border border-gray-300 rounded-lg mb-2"><textarea id="asset-memo-input" placeholder="\u47700 \u47784 " rows="2" class="w-full p-2 border border-gray-300 rounded-lg mb-2"></textarea><button type="submit" class="w-full bg-indigo-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-600 transition duration-300">\u51088 \u49328  \u52628 \u44032 </button></form></div>\
+                    <div class="mt-4 border-t pt-4"><h4 class="font-semibold text-gray-600 mb-2">\uc0\u51088 \u49328  \u47785 \u47197 </h4><ul id="assets-list" class="space-y-2"></ul></div>\
+                </div>\
+            </div>\
+        </main>\
+    </div>\
+\
+    <!-- Modals -->\
+    <div id="modal" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center p-4 hidden z-50">\
+        <div id="modal-content" class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 modal-enter"><div class="flex justify-between items-center mb-6"><h2 class="text-2xl font-bold text-gray-800">\uc0\u49352  \u44144 \u47000  \u45236 \u50669 </h2><button id="close-modal-btn" class="text-gray-400 hover:text-gray-600 text-3xl leading-none">&times;</button></div><form id="transaction-form" class="max-h-[70vh] overflow-y-auto pr-2"><div class="mb-4"><label class="block text-gray-700 font-semibold mb-2">\u51333 \u47448 </label><div class="flex gap-4"><label class="flex items-center"><input type="radio" name="type" value="income" class="form-radio text-green-500" checked><span class="ml-2 text-gray-700">\u49688 \u51077 </span></label><label class="flex items-center"><input type="radio" name="type" value="expense" class="form-radio text-red-500"><span class="ml-2 text-gray-700">\u51648 \u52636 </span></label></div></div><div class="mb-4"><div class="flex justify-between items-center mb-1"><label for="category" class="text-gray-700 font-semibold">\u44592 \u48376  \u52852 \u53580 \u44256 \u47532 </label><button type="button" id="open-add-main-category-modal-btn" class="p-1 rounded-full hover:bg-gray-200"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg></button></div><select id="category" class="w-full p-2 border border-gray-300 rounded-lg" required></select></div><div class="mb-4 hidden" id="subcategory-container"><div class="flex justify-between items-center mb-1"><label for="subcategory" class="text-gray-700 font-semibold">\u49464 \u48512  \u52852 \u53580 \u44256 \u47532 </label><button type="button" id="open-add-subcategory-modal-btn" class="p-1 rounded-full hover:bg-gray-200"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg></button></div><select id="subcategory" class="w-full p-2 border border-gray-300 rounded-lg"></select></div><div class="mb-4 border-t pt-4"><label for="description" class="block text-gray-700 font-semibold mb-2">\u45236 \u50669 </label><input type="text" id="description" class="w-full p-2 border border-gray-300 rounded-lg" required></div><div class="mb-4"><label for="amount" class="block text-gray-700 font-semibold mb-2">\u44552 \u50529 </label><input type="number" id="amount" class="w-full p-2 border border-gray-300 rounded-lg" required></div><div class="mb-6"><label for="date" class="block text-gray-700 font-semibold mb-2">\u45216 \u51676 </label><input type="date" id="date" class="w-full p-2 border border-gray-300 rounded-lg" required></div><button type="submit" class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-700 transition duration-300">\u51200 \u51109 \u54616 \u44592 </button></form></div>\
+    </div>\
+    <div id="settings-modal" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center p-4 hidden z-50">\
+        <div id="settings-modal-content" class="bg-white rounded-2xl shadow-xl w-full max-w-lg p-6 modal-enter max-h-[90vh] flex flex-col"><div class="flex justify-between items-center mb-6 flex-shrink-0"><h2 class="text-2xl font-bold text-gray-800">\uc0\u49444 \u51221 </h2><button id="close-settings-modal-btn" class="text-gray-400 hover:text-gray-600 text-3xl leading-none">&times;</button></div><div class="overflow-y-auto pr-2"><div class="mb-6"><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">\u45936 \u51060 \u53552  \u44288 \u47532 </h3><p class="text-sm text-gray-600 mb-3">\u51008 \u54665 /\u52852 \u46300 \u49324 \u50640 \u49436  \u45236 \u47140 \u48155 \u51008  \u44144 \u47000 \u45236 \u50669  \u54028 \u51068 (.csv, .txt)\u51012  \u44032 \u51256 \u50732  \u49688  \u51080 \u49845 \u45768 \u45796 .</p><div><label for="import-file-input" class="w-full cursor-pointer bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300 inline-block text-center">\u54028 \u51068 \u50640 \u49436  \u45236 \u50669  \u44032 \u51256 \u50724 \u44592 </label><input type="file" id="import-file-input" class="hidden" accept=".csv, .txt"><p id="file-name-display" class="text-sm text-gray-500 mt-2 text-center"></p></div></div><div class="mb-6"><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">\u50545  \u49444 \u52824 </h3><p class="text-sm text-gray-600">\u51060  \u50937 \u49324 \u51060 \u53944 \u47484  \u54856  \u54868 \u47732 \u50640  \u52628 \u44032 \u54616 \u50668  \u50545 \u52376 \u47100  \u49324 \u50857 \u54624  \u49688  \u51080 \u49845 \u45768 \u45796 . \u49324 \u50857  \u51473 \u51064  \u48652 \u46972 \u50864 \u51200 \u51032  '\u54856  \u54868 \u47732 \u50640  \u52628 \u44032 ' \u47700 \u45684 \u47484  \u52286 \u50500 \u48372 \u49464 \u50836 .</p></div></div></div>\
+    </div>\
+    <div id="category-modal" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center p-4 hidden z-[60]">\
+        <div id="category-modal-content" class="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6 modal-enter"><h2 id="category-modal-title" class="text-2xl font-bold text-gray-800 mb-4">\uc0\u52852 \u53580 \u44256 \u47532  \u52628 \u44032 </h2><form id="add-category-form"><input type="text" id="add-category-name-input" placeholder="\u52852 \u53580 \u44256 \u47532  \u51060 \u47492 " class="w-full p-2 border border-gray-300 rounded-lg mb-4" required><div class="flex gap-2"><button type="button" id="close-category-modal-btn" class="w-full bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300">\u52712 \u49548 </button><button type="submit" class="w-full bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-700">\u51200 \u51109 </button></div></form></div>\
+    </div>\
+\
+    <!-- \uc0\u54616 \u45800  \u45348 \u48708 \u44172 \u51060 \u49496  \u47700 \u45684  -->\
+    <nav id="bottom-nav" class="fixed bottom-0 left-0 w-full bg-white border-t z-10">\
+        <div class="flex justify-around max-w-2xl mx-auto">\
+            <button data-page="home-page" class="nav-btn flex-1 text-center py-2 text-indigo-600">\
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>\
+                <span class="text-xs font-medium">\uc0\u54856 </span>\
+            </button>\
+            <button data-page="stats-page" class="nav-btn flex-1 text-center py-2 text-gray-500">\
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>\
+                <span class="text-xs font-medium">\uc0\u53685 \u44228 </span>\
+            </button>\
+            <button data-page="assets-page" class="nav-btn flex-1 text-center py-2 text-gray-500">\
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>\
+                <span class="text-xs font-medium">\uc0\u51088 \u49328 </span>\
+            </button>\
+        </div>\
+    </nav>\
+\
+    <script>\
+        // --- \uc0\u49345 \u53468  \u44288 \u47532  ---\
+        let transactions = [ \{ id: 1, description: '9\uc0\u50900  \u44553 \u50668 ', amount: 2000000, date: '2025-09-01', type: 'income', category: '\u50900 \u44553 ', subcategory: null \}, \{ id: 2, description: '\u51216 \u49900  \u49885 \u49324 ', amount: 15000, date: '2025-09-02', type: 'expense', category: '\u49885 \u48708 ', subcategory: '\u50808 \u49885 ' \}, \{ id: 3, description: '\u52636 \u44540  \u48260 \u49828 ', amount: 50000, date: '2025-09-03', type: 'expense', category: '\u44368 \u53685 ', subcategory: '\u48260 \u49828 /\u51648 \u54616 \u52384 ' \} ];\
+        let incomeCategories = [\{ name: '\uc0\u50900 \u44553 ', subcategories: [] \}, \{ name: '\u50857 \u46024 ', subcategories: [] \}, \{ name: '\u49324 \u50629  \u49548 \u46301 ', subcategories: ['\u54532 \u47196 \u51229 \u53944 A', '\u54532 \u47196 \u51229 \u53944 B'] \}, \{ name: '\u44592 \u53440 ', subcategories: [] \}];\
+        let expenseCategories = [\{ name: '\uc0\u49885 \u48708 ', subcategories: ['\u50808 \u49885 ', '\u48176 \u45804 ', '\u51109 \u48372 \u44592 '] \}, \{ name: '\u44368 \u53685 ', subcategories: ['\u48260 \u49828 /\u51648 \u54616 \u52384 ', '\u53469 \u49884 ', '\u51452 \u50976 '] \}, \{ name: '\u49660 \u54609 ', subcategories: ['\u51032 \u47448 ', '\u49373 \u54876 \u50857 \u54408 '] \}, \{ name: '\u51452 \u44144 /\u53685 \u49888 ', subcategories: ['\u50900 \u49464 ', '\u44288 \u47532 \u48708 ', '\u53685 \u49888 \u48708 '] \}, \{ name: '\u44592 \u53440 ', subcategories: [] \}];\
+        let assetGroups = ['\uc0\u54788 \u44552 ', '\u51008 \u54665 ', '\u52852 \u46300 ', '\u51201 \u44552 '];\
+        let assets = [ \{ id: 1, group: '\uc0\u51008 \u54665 ', name: '\u45236  \u51452 \u44144 \u47000  \u53685 \u51109 ', initialAmount: 1500000, memo: '\u50900 \u44553  \u53685 \u51109 ' \}, \{ id: 2, group: '\u52852 \u46300 ', name: '\u49373 \u54876 \u48708  \u52852 \u46300 ', initialAmount: 0, memo: '\u52404 \u53356 \u52852 \u46300  \u50672 \u44208 ' \} ];\
+        let chartInstance = null, incomeChartInstance = null, expenseChartInstance = null, categoryModalContext = \{ type: null \};\
+\
+        // --- DOM \uc0\u50836 \u49548  ---\
+        const pages = document.querySelectorAll('main > div[id$="-page"]'), navButtons = document.querySelectorAll('.nav-btn'), summarySection = document.getElementById('summary-section'), transactionList = document.getElementById('transaction-list'), statsTransactionList = document.getElementById('stats-transaction-list'), chartCanvas = document.getElementById('transactionChart'), incomeCategoryChartCanvas = document.getElementById('incomeCategoryChart'), expenseCategoryChartCanvas = document.getElementById('expenseCategoryChart'), modal = document.getElementById('modal'), modalContent = document.getElementById('modal-content'), addTransactionBtn = document.getElementById('add-transaction-btn'), closeModalBtn = document.getElementById('close-modal-btn'), transactionForm = document.getElementById('transaction-form'), categorySelect = document.getElementById('category'), subcategorySelect = document.getElementById('subcategory'), subcategoryContainer = document.getElementById('subcategory-container'), typeRadios = document.querySelectorAll('input[name="type"]'), settingsBtn = document.getElementById('settings-btn'), settingsModal = document.getElementById('settings-modal'), settingsModalContent = document.getElementById('settings-modal-content'), closeSettingsModalBtn = document.getElementById('close-settings-modal-btn'), importFileInput = document.getElementById('import-file-input'), fileNameDisplay = document.getElementById('file-name-display'), assetGroupsList = document.getElementById('asset-groups-list'), newAssetGroupInput = document.getElementById('new-asset-group-input'), addAssetGroupBtn = document.getElementById('add-asset-group-btn'), addAssetForm = document.getElementById('add-asset-form'), assetGroupSelect = document.getElementById('asset-group-select'), assetsList = document.getElementById('assets-list'), categoryModal = document.getElementById('category-modal'), categoryModalContent = document.getElementById('category-modal-content'), categoryModalTitle = document.getElementById('category-modal-title'), addCategoryForm = document.getElementById('add-category-form'), addCategoryNameInput = document.getElementById('add-category-name-input'), closeCategoryModalBtn = document.getElementById('close-category-modal-btn'), openAddMainCategoryModalBtn = document.getElementById('open-add-main-category-modal-btn'), openAddSubcategoryModalBtn = document.getElementById('open-add-subcategory-modal-btn'), statsTabs = document.getElementById('stats-tabs'), statsTabButtons = document.querySelectorAll('.stats-tab-btn'), statsChartsContent = document.getElementById('stats-charts-content'), statsHistoryContent = document.getElementById('stats-history-content');\
+\
+        // --- \uc0\u54168 \u51060 \u51648  \u45348 \u48708 \u44172 \u51060 \u49496  ---\
+        const showPage = (pageId) => \{\
+            pages.forEach(page => page.classList.add('hidden'));\
+            document.getElementById(pageId)?.classList.remove('hidden');\
+            navButtons.forEach(btn => \{\
+                btn.classList.toggle('text-indigo-600', btn.dataset.page === pageId);\
+                btn.classList.toggle('text-gray-500', btn.dataset.page !== pageId);\
+            \});\
+            if (pageId === 'assets-page') \{ renderAssetGroups(); renderAssetsList(); \}\
+            if (pageId === 'stats-page') \{ handleStatsTabClick('charts'); \}\
+        \};\
+        \
+        const handleStatsTabClick = (tabId) => \{\
+            statsTabButtons.forEach(btn => \{\
+                const isSelected = btn.dataset.tab === tabId;\
+                btn.classList.toggle('text-indigo-600', isSelected);\
+                btn.classList.toggle('border-indigo-500', isSelected);\
+                btn.classList.toggle('text-gray-500', !isSelected);\
+                btn.classList.toggle('border-transparent', !isSelected);\
+            \});\
+            statsChartsContent.classList.toggle('hidden', tabId !== 'charts');\
+            statsHistoryContent.classList.toggle('hidden', tabId !== 'history');\
+            if (tabId === 'charts') \{\
+                renderMainChart();\
+                incomeChartInstance = renderCategoryChart(incomeCategoryChartCanvas, incomeChartInstance, 'income', '\uc0\u52852 \u53580 \u44256 \u47532 \u48324  \u49688 \u51077 ', ['#4ade80', '#86efac', '#22c55e', '#16a34a', '#15803d']);\
+                expenseChartInstance = renderCategoryChart(expenseCategoryChartCanvas, expenseChartInstance, 'expense', '\uc0\u52852 \u53580 \u44256 \u47532 \u48324  \u51648 \u52636 ', ['#f87171', '#fb923c', '#ef4444', '#dc2626', '#b91c1c', '#f59e0b']);\
+            \}\
+        \};\
+\
+        // --- \uc0\u47116 \u45908 \u47553  \u54632 \u49688  ---\
+        const formatCurrency = (amount) => new Intl.NumberFormat('ko-KR', \{ style: 'currency', currency: 'KRW' \}).format(amount);\
+        const renderSummary = () => \{ const totalIncome = transactions.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0); const totalExpense = transactions.filter(t => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0); summarySection.innerHTML = `<div class="bg-indigo-100 text-indigo-800 p-4 rounded-xl text-center"><h3 class="font-semibold text-sm">\uc0\u54788 \u51116  \u51092 \u50529 </h3><p class="text-2xl font-bold mt-1">$\{formatCurrency(totalIncome - totalExpense)\}</p></div><div class="bg-green-100 text-green-800 p-4 rounded-xl text-center"><h3 class="font-semibold text-sm">\u52509  \u49688 \u51077 </h3><p class="text-2xl font-bold mt-1">$\{formatCurrency(totalIncome)\}</p></div><div class="bg-red-100 text-red-800 p-4 rounded-xl text-center"><h3 class="font-semibold text-sm">\u52509  \u51648 \u52636 </h3><p class="text-2xl font-bold mt-1">$\{formatCurrency(totalExpense)\}</p></div>`; \};\
+        const renderTransactionList = () => \{ \
+            [transactionList, statsTransactionList].forEach(list => \{\
+                if (!list) return;\
+                list.innerHTML = ''; \
+                if (transactions.length === 0) \{ list.innerHTML = `<li class="text-center text-gray-500 p-4">\uc0\u44144 \u47000  \u45236 \u50669 \u51060  \u50630 \u49845 \u45768 \u45796 .</li>`; return; \} \
+                [...transactions].sort((a, b) => new Date(b.date) - new Date(a.date)).forEach(t => \{ \
+                    const isIncome = t.type === 'income'; const categoryDisplay = t.subcategory ? `$\{t.category\} &gt; $\{t.subcategory\}` : t.category; const li = document.createElement('li'); li.className = 'flex justify-between items-center p-3 bg-gray-50 rounded-lg'; li.innerHTML = `<div class="flex-grow"><div class="flex items-center gap-2 flex-wrap"><p class="font-semibold">$\{t.description\}</p><span class="text-xs bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full">$\{categoryDisplay\}</span></div><p class="text-sm text-gray-500">$\{t.date\}</p></div><span class="font-semibold shrink-0 $\{isIncome ? 'text-green-600' : 'text-red-600'\}">$\{isIncome ? '+' : '-'\} $\{formatCurrency(t.amount)\}</span>`; list.appendChild(li); \
+                \});\
+            \});\
+        \};\
+        const renderMainChart = () => \{ const totalIncome = transactions.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0); const totalExpense = transactions.filter(t => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0); if (chartInstance) chartInstance.destroy(); if (!chartCanvas) return; chartInstance = new Chart(chartCanvas, \{ type: 'doughnut', data: \{ labels: ['\uc0\u52509  \u49688 \u51077 ', '\u52509  \u51648 \u52636 '], datasets: [\{ data: [totalIncome, totalExpense], backgroundColor: ['#4ade80', '#f87171'], borderColor: ['#ffffff'], borderWidth: 2 \}] \}, options: \{ responsive: true, plugins: \{ legend: \{ position: 'top' \}, title: \{ display: true, text: '\u52509  \u49688 \u51077 \u44284  \u51648 \u52636  \u48708 \u50984 ' \} \} \} \}); \};\
+        const renderCategoryChart = (canvas, instance, type, title, colors) => \{ if (instance) instance.destroy(); const filteredData = transactions.filter(t => t.type === type); const groupedData = filteredData.reduce((acc, t) => \{ acc[t.category] = (acc[t.category] || 0) + t.amount; return acc; \}, \{\}); const labels = Object.keys(groupedData); const data = Object.values(groupedData); const parentDiv = canvas.parentElement; const existingMsg = parentDiv.querySelector('.no-data-msg'); if (existingMsg) existingMsg.remove(); if (labels.length === 0) \{ canvas.style.display = 'none'; const msg = document.createElement('p'); msg.className = 'text-center text-gray-500 py-16 no-data-msg'; msg.textContent = `$\{type === 'income' ? '\uc0\u49688 \u51077 ' : '\u51648 \u52636 '\} \u45236 \u50669 \u51060  \u50630 \u49845 \u45768 \u45796 .`; parentDiv.appendChild(msg); return null; \} canvas.style.display = 'block'; return new Chart(canvas, \{ type: 'pie', data: \{ labels, datasets: [\{ data, backgroundColor: colors, borderColor: '#ffffff', borderWidth: 2 \}] \}, options: \{ responsive: true, plugins: \{ legend: \{ position: 'right', align: 'start', labels: \{ boxWidth: 20, padding: 15 \} \}, title: \{ display: true, text: title, font: \{ size: 16 \}, padding: \{ bottom: 10 \} \} \} \} \}); \};\
+        const renderAssetGroups = () => \{ assetGroupsList.innerHTML = ''; assetGroupSelect.innerHTML = ''; assetGroups.forEach(group => \{ const div = document.createElement('div'); div.className = 'flex items-center gap-2 bg-gray-100 rounded-full px-3 py-1 text-sm font-medium text-gray-800'; div.innerHTML = `<span>$\{group\}</span> <button data-group="$\{group\}" class="text-gray-400 hover:text-red-500 -mr-1 p-0.5 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg></button>`; assetGroupsList.appendChild(div); const option = document.createElement('option'); option.value = group; option.textContent = group; assetGroupSelect.appendChild(option); \}); \};\
+        const renderAssetsList = () => \{ assetsList.innerHTML = ''; if(assets.length === 0) \{ assetsList.innerHTML = '<li class="text-center text-gray-500 text-sm py-2">\uc0\u46321 \u47197 \u46108  \u51088 \u49328 \u51060  \u50630 \u49845 \u45768 \u45796 .</li>'; return; \} assets.forEach(asset => \{ const li = document.createElement('li'); li.className = 'p-3 bg-gray-50 rounded-lg'; li.innerHTML = ` <div class="flex justify-between items-start"> <div> <p class="font-semibold">$\{asset.name\} <span class="text-xs text-gray-500 font-normal">($\{asset.group\})</span></p> <p class="text-sm text-gray-600">$\{formatCurrency(asset.initialAmount)\}</p> <p class="text-xs text-gray-500 mt-1">$\{asset.memo || ''\}</p> </div> <button data-id="$\{asset.id\}" class="text-red-500 hover:text-red-700 font-bold px-2 shrink-0">\u49325 \u51228 </button> </div>`; assetsList.appendChild(li); \}); \};\
+        const updateSubcategoryOptions = () => \{ const selectedType = document.querySelector('input[name="type"]:checked').value; const categories = selectedType === 'income' ? incomeCategories : expenseCategories; const selectedCategoryName = categorySelect.value; const selectedCategory = categories.find(c => c.name === selectedCategoryName); subcategorySelect.innerHTML = '<option value="">\uc0\u49440 \u53469  \u50504 \u54632 </option>'; if (selectedCategory && selectedCategory.subcategories.length > 0) \{ selectedCategory.subcategories.forEach(sub => subcategorySelect.innerHTML += `<option value="$\{sub\}">$\{sub\}</option>`); subcategoryContainer.classList.remove('hidden'); openAddSubcategoryModalBtn.disabled = false; \} else \{ subcategoryContainer.classList.add('hidden'); openAddSubcategoryModalBtn.disabled = true; \} \};\
+        const updateCategoryOptions = () => \{ const selectedType = document.querySelector('input[name="type"]:checked').value; const categories = selectedType === 'income' ? incomeCategories : expenseCategories; categorySelect.innerHTML = categories.map(cat => `<option value="$\{cat.name\}">$\{cat.name\}</option>`).join(''); updateSubcategoryOptions(); \};\
+        const handleAddMainCategory = () => \{ const newCategoryName = addCategoryNameInput.value.trim(); if (!newCategoryName) return; const selectedType = document.querySelector('input[name="type"]:checked').value; const categories = selectedType === 'income' ? incomeCategories : expenseCategories; if (!categories.find(c => c.name === newCategoryName)) \{ categories.push(\{ name: newCategoryName, subcategories: [] \}); updateCategoryOptions(); categorySelect.value = newCategoryName; \} closeCategoryModal(); \};\
+        const handleAddSubcategory = () => \{ const newSubcategoryName = addCategoryNameInput.value.trim(); if (!newSubcategoryName) return; const selectedType = document.querySelector('input[name="type"]:checked').value; const categories = selectedType === 'income' ? incomeCategories : expenseCategories; const selectedCategoryName = categorySelect.value; const mainCategory = categories.find(c => c.name === selectedCategoryName); if (mainCategory && !mainCategory.subcategories.includes(newSubcategoryName)) \{ mainCategory.subcategories.push(newSubcategoryName); updateSubcategoryOptions(); subcategorySelect.value = newSubcategoryName; \} closeCategoryModal(); \};\
+        const handleAddAssetGroup = () => \{ const newGroup = newAssetGroupInput.value.trim(); if (newGroup && !assetGroups.includes(newGroup)) \{ assetGroups.push(newGroup); renderAssetGroups(); newAssetGroupInput.value = ''; \} \};\
+        const handleDeleteAssetGroup = (groupName) => \{ if (assets.some(asset => asset.group === groupName)) \{ alert('\uc0\u54644 \u45817  \u44536 \u47353 \u50640  \u49549 \u54620  \u51088 \u49328 \u51060  \u51080 \u49845 \u45768 \u45796 . \u51088 \u49328 \u51012  \u47676 \u51200  \u49325 \u51228 \u54616 \u44144 \u45208  \u45796 \u47480  \u44536 \u47353 \u51004 \u47196  \u51060 \u46041 \u54644 \u51452 \u49464 \u50836 .'); return; \} assetGroups = assetGroups.filter(g => g !== groupName); renderAssetGroups(); \};\
+        const handleAddAsset = (e) => \{ e.preventDefault(); const newAsset = \{ id: Date.now(), group: e.target.elements['asset-group-select'].value, name: e.target.elements['asset-name-input'].value, initialAmount: +e.target.elements['asset-initial-amount-input'].value, memo: e.target.elements['asset-memo-input'].value \}; assets.push(newAsset); renderAssetsList(); e.target.reset(); \};\
+        const handleDeleteAsset = (assetId) => \{ assets = assets.filter(a => a.id !== assetId); renderAssetsList(); \};\
+        const openModalAnimator = (modalEl, contentEl) => \{ modalEl.classList.remove('hidden'); requestAnimationFrame(() => \{ contentEl.classList.remove('modal-enter'); contentEl.classList.add('modal-enter-active'); \}); \};\
+        const closeModalAnimator = (modalEl, contentEl) => \{ contentEl.classList.remove('modal-enter-active'); contentEl.classList.add('modal-exit-active'); setTimeout(() => \{ modalEl.classList.add('hidden'); contentEl.classList.remove('modal-exit-active'); contentEl.classList.add('modal-enter'); \}, 300); \};\
+        const openTransactionModal = () => \{ transactionForm.reset(); document.getElementById('date').value = new Date().toISOString().split('T')[0]; updateCategoryOptions(); openModalAnimator(modal, modalContent); \};\
+        const closeTransactionModal = () => closeModalAnimator(modal, modalContent);\
+        const openSettingsModal = () => \{ fileNameDisplay.textContent = ''; importFileInput.value = ''; openModalAnimator(settingsModal, settingsModalContent); \};\
+        const closeSettingsModal = () => closeModalAnimator(settingsModal, settingsModalContent);\
+        const openCategoryModal = (type) => \{ categoryModalContext.type = type; addCategoryForm.reset(); if (type === 'main') \{ categoryModalTitle.textContent = '\uc0\u49352  \u44592 \u48376  \u52852 \u53580 \u44256 \u47532 '; \} else \{ const selectedMainCategory = categorySelect.value; categoryModalTitle.textContent = `'$\{selectedMainCategory\}'\u51032  \u49464 \u48512  \u52852 \u53580 \u44256 \u47532 `; \} openModalAnimator(categoryModal, categoryModalContent); \};\
+        const closeCategoryModal = () => closeModalAnimator(categoryModal, categoryModalContent);\
+        const handleFormSubmit = (event) => \{ event.preventDefault(); transactions.push(\{ id: Date.now(), type: event.target.elements.type.value, description: event.target.elements.description.value, amount: +event.target.elements.amount.value, date: event.target.elements.date.value, category: event.target.elements.category.value, subcategory: event.target.elements.subcategory.value || null \}); renderSummary(); renderTransactionList(); closeTransactionModal(); \};\
+        const handleFileImport = (event) => \{ const file = event.target.files[0]; if (!file) return; fileNameDisplay.textContent = `"$\{file.name\}" \uc0\u54028 \u51068 \u51060  \u49440 \u53469 \u46104 \u50632 \u49845 \u45768 \u45796 .`; setTimeout(() => \{ alert(`[\u49884 \u48044 \u47112 \u51060 \u49496 ] '$\{file.name\}' \u54028 \u51068 \u50640 \u49436  2\u44060 \u51032  \u45236 \u50669 \u51012  \u44032 \u51256 \u50772 \u49845 \u45768 \u45796 .`); [\{ id: Date.now() + 1, description: '\u52852 \u46300 \u44050 (\u54028 \u51068 )', amount: 350000, date: '2025-09-05', type: 'expense', category: '\u52852 \u46300 \u45824 \u44552 ', subcategory: null \}, \{ id: Date.now() + 2, description: '\u50728 \u46972 \u51064 \u49660 \u54609 (\u54028 \u51068 )', amount: 78000, date: '2025-09-06', type: 'expense', category: '\u49660 \u54609 ', subcategory: '\u49373 \u54876 \u50857 \u54408 ' \}].forEach(t => \{ const categories = t.type === 'expense' ? expenseCategories : incomeCategories; if (!categories.find(c => c.name === t.category)) categories.push(\{ name: t.category, subcategories: [] \}); transactions.push(t); \}); renderSummary(); renderTransactionList(); closeSettingsModal(); \}, 500); \};\
+\
+        // --- \uc0\u51060 \u48292 \u53944  \u47532 \u49828 \u45320  \u49444 \u51221  ---\
+        navButtons.forEach(btn => btn.addEventListener('click', () => showPage(btn.dataset.page)));\
+        statsTabs.addEventListener('click', (e) => \{ const button = e.target.closest('.stats-tab-btn'); if (button) handleStatsTabClick(button.dataset.tab); \});\
+        addTransactionBtn.addEventListener('click', openTransactionModal);\
+        closeModalBtn.addEventListener('click', closeTransactionModal);\
+        modal.addEventListener('click', (e) => \{ if (e.target === modal) closeTransactionModal(); \});\
+        transactionForm.addEventListener('submit', handleFormSubmit);\
+        typeRadios.forEach(radio => radio.addEventListener('change', updateCategoryOptions));\
+        categorySelect.addEventListener('change', updateSubcategoryOptions);\
+        openAddMainCategoryModalBtn.addEventListener('click', () => openCategoryModal('main'));\
+        openAddSubcategoryModalBtn.addEventListener('click', () => openCategoryModal('sub'));\
+        closeCategoryModalBtn.addEventListener('click', closeCategoryModal);\
+        categoryModal.addEventListener('click', (e) => \{ if (e.target === categoryModal) closeCategoryModal(); \});\
+        addCategoryForm.addEventListener('submit', (e) => \{ e.preventDefault(); if (categoryModalContext.type === 'main') \{ handleAddMainCategory(); \} else if (categoryModalContext.type === 'sub') \{ handleAddSubcategory(); \} \});\
+        settingsBtn.addEventListener('click', openSettingsModal);\
+        closeSettingsModalBtn.addEventListener('click', closeSettingsModal);\
+        settingsModal.addEventListener('click', (e) => \{ if (e.target === settingsModal) closeSettingsModal(); \});\
+        importFileInput.addEventListener('change', handleFileImport);\
+        addAssetGroupBtn.addEventListener('click', handleAddAssetGroup);\
+        newAssetGroupInput.addEventListener('keydown', (e) => \{ if (e.key === 'Enter') \{ e.preventDefault(); handleAddAssetGroup(); \} \});\
+        addAssetForm.addEventListener('submit', handleAddAsset);\
+        assetGroupsList.addEventListener('click', (e) => \{ if (e.target.closest('button')?.dataset.group) \{ handleDeleteAssetGroup(e.target.closest('button').dataset.group); \} \});\
+        assetsList.addEventListener('click', (e) => \{ if (e.target.closest('button')?.dataset.id) \{ handleDeleteAsset(parseInt(e.target.closest('button').dataset.id, 10)); \} \});\
+\
+        // --- \uc0\u50545  \u52488 \u44592 \u54868  ---\
+        document.addEventListener('DOMContentLoaded', () => \{\
+            renderSummary();\
+            renderTransactionList();\
+            showPage('home-page');\
+        \});\
+    </script>\
+</body>\
+</html>\
+\
+}
