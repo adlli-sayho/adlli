@@ -123,10 +123,24 @@
         <div id="modal-content" class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 modal-enter"><div class="flex justify-between items-center mb-6"><h2 id="modal-title" class="text-2xl font-bold text-gray-800">새 거래 내역</h2><button id="close-modal-btn" class="text-gray-400 hover:text-gray-600 text-3xl leading-none">&times;</button></div><form id="transaction-form" class="max-h-[70vh] overflow-y-auto pr-2"><input type="hidden" id="transaction-id"><div class="mb-4"><label class="block text-gray-700 font-semibold mb-2">종류</label><div class="flex gap-4"><label class="flex items-center"><input type="radio" name="type" value="income" class="form-radio text-green-500" checked><span class="ml-2 text-gray-700">수입</span></label><label class="flex items-center"><input type="radio" name="type" value="expense" class="form-radio text-red-500"><span class="ml-2 text-gray-700">지출</span></label></div></div><div class="mb-4"><div class="flex justify-between items-center mb-1"><label for="category" class="text-gray-700 font-semibold">기본 카테고리</label><button type="button" id="open-add-main-category-modal-btn" class="p-1 rounded-full hover:bg-gray-200"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg></button></div><select id="category" class="w-full p-2 border border-gray-300 rounded-lg" required></select></div><div class="mb-4 hidden" id="subcategory-container"><div class="flex justify-between items-center mb-1"><label for="subcategory" class="text-gray-700 font-semibold">세부 카테고리</label><button type="button" id="open-add-subcategory-modal-btn" class="p-1 rounded-full hover:bg-gray-200"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg></button></div><select id="subcategory" class="w-full p-2 border border-gray-300 rounded-lg"></select></div><div class="mb-4 border-t pt-4"><label for="description" class="block text-gray-700 font-semibold mb-2">내역</label><input type="text" id="description" class="w-full p-2 border border-gray-300 rounded-lg" required></div><div class="mb-4"><label for="amount" class="block text-gray-700 font-semibold mb-2">금액</label><input type="number" id="amount" class="w-full p-2 border border-gray-300 rounded-lg" required></div><div class="mb-6"><label for="date" class="block text-gray-700 font-semibold mb-2">날짜</label><input type="date" id="date" class="w-full p-2 border border-gray-300 rounded-lg" required></div><button type="submit" class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-700 transition duration-300">저장하기</button></form></div>
     </div>
     <div id="settings-modal" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center p-4 hidden z-50">
-        <div id="settings-modal-content" class="bg-white rounded-2xl shadow-xl w-full max-w-lg p-6 modal-enter max-h-[90vh] flex flex-col"><div class="flex justify-between items-center mb-6 flex-shrink-0"><h2 class="text-2xl font-bold text-gray-800">설정</h2><button id="close-settings-modal-btn" class="text-gray-400 hover:text-gray-600 text-3xl leading-none">&times;</button></div><div class="overflow-y-auto pr-2"><div class="mb-6"><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">데이터 관리</h3><p class="text-sm text-gray-600 mb-3">은행/카드사에서 내려받은 거래내역 파일(.csv, .txt)을 가져올 수 있습니다.</p><div><label for="import-file-input" class="w-full cursor-pointer bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300 inline-block text-center">파일에서 내역 가져오기</label><input type="file" id="import-file-input" class="hidden" accept=".csv, .txt"><p id="file-name-display" class="text-sm text-gray-500 mt-2 text-center"></p></div></div><div class="mb-6"><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">화면 설정</h3><div id="theme-selector" class="flex rounded-lg border border-gray-200 dark:border-gray-600 p-1 space-x-1"><button data-theme="light" class="theme-btn flex-1 py-1 rounded-md text-sm">라이트</button><button data-theme="dark" class="theme-btn flex-1 py-1 rounded-md text-sm">다크</button><button data-theme="system" class="theme-btn flex-1 py-1 rounded-md text-sm">시스템</button></div></div><div class="mb-6"><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">앱 설치</h3><p class="text-sm text-gray-600">이 웹사이트를 홈 화면에 추가하여 앱처럼 사용할 수 있습니다. 사용 중인 브라우저의 '홈 화면에 추가' 메뉴를 찾아보세요.</p></div></div></div>
+        <div id="settings-modal-content" class="bg-white rounded-2xl shadow-xl w-full max-w-lg p-6 modal-enter max-h-[90vh] flex flex-col"><div class="flex justify-between items-center mb-6 flex-shrink-0"><h2 class="text-2xl font-bold text-gray-800">설정</h2><button id="close-settings-modal-btn" class="text-gray-400 hover:text-gray-600 text-3xl leading-none">&times;</button></div><div class="overflow-y-auto pr-2"><div id="account-section" class="mb-6"><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">계정</h3><div id="account-info"></div></div><div class="mb-6"><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">데이터 관리</h3><p class="text-sm text-gray-600 mb-3">은행/카드사에서 내려받은 거래내역 파일(.csv, .txt)을 가져올 수 있습니다.</p><div><label for="import-file-input" class="w-full cursor-pointer bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300 inline-block text-center">파일에서 내역 가져오기</label><input type="file" id="import-file-input" class="hidden" accept=".csv, .txt"><p id="file-name-display" class="text-sm text-gray-500 mt-2 text-center"></p></div></div><div class="mb-6"><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">화면 설정</h3><div id="theme-selector" class="flex rounded-lg border border-gray-200 dark:border-gray-600 p-1 space-x-1"><button data-theme="light" class="theme-btn flex-1 py-1 rounded-md text-sm">라이트</button><button data-theme="dark" class="theme-btn flex-1 py-1 rounded-md text-sm">다크</button><button data-theme="system" class="theme-btn flex-1 py-1 rounded-md text-sm">시스템</button></div></div><div class="mb-6"><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">앱 설치</h3><p class="text-sm text-gray-600">이 웹사이트를 홈 화면에 추가하여 앱처럼 사용할 수 있습니다. 사용 중인 브라우저의 '홈 화면에 추가' 메뉴를 찾아보세요.</p></div></div></div>
     </div>
     <div id="category-modal" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center p-4 hidden z-[60]">
         <div id="category-modal-content" class="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6 modal-enter"><h2 id="category-modal-title" class="text-2xl font-bold text-gray-800 mb-4">카테고리 추가</h2><form id="add-category-form"><input type="text" id="add-category-name-input" placeholder="카테고리 이름" class="w-full p-2 border border-gray-300 rounded-lg mb-4" required><div class="flex gap-2"><button type="button" id="close-category-modal-btn" class="w-full bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300">취소</button><button type="submit" class="w-full bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-700">저장</button></div></form></div>
+    </div>
+    <div id="auth-modal" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center p-4 hidden z-[60]">
+        <div id="auth-modal-content" class="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6 modal-enter">
+            <div class="flex justify-between items-center mb-6"><h2 id="auth-modal-title" class="text-2xl font-bold text-gray-800">계정 연결</h2><button id="close-auth-modal-btn" class="text-gray-400 hover:text-gray-600 text-3xl leading-none">&times;</button></div>
+            <div>
+                <button id="google-signin-btn" class="w-full mb-3 flex items-center justify-center gap-2 bg-white border border-gray-300 text-gray-700 font-semibold py-2 px-4 rounded-lg hover:bg-gray-50 transition duration-300"><svg class="w-5 h-5" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path><path fill="none" d="M0 0h48v48H0z"></path></svg>Google 계정으로 계속</button>
+                <div class="my-4 text-center text-gray-500 text-sm">또는</div>
+                <form id="email-password-form">
+                    <input type="email" id="email-input" placeholder="이메일" class="w-full p-2 border border-gray-300 rounded-lg mb-2" required>
+                    <input type="password" id="password-input" placeholder="비밀번호" class="w-full p-2 border border-gray-300 rounded-lg mb-4" required>
+                    <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-700 transition duration-300">이메일로 가입/로그인</button>
+                </form>
+            </div>
+        </div>
     </div>
 
     <!-- 하단 네비게이션 메뉴 -->
@@ -152,147 +166,56 @@
         // Firebase SDK (Software Development Kit)를 불러옵니다.
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getFirestore, collection, doc, getDoc, setDoc, addDoc, onSnapshot, deleteDoc, updateDoc, writeBatch } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged, GoogleAuthProvider, EmailAuthProvider, linkWithCredential, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
         // ===================================================================================
-        // ===================================================================================
-        // ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-        //
-        //       ★★★★★ 중요 ★★★★★
-        //
-        //       이곳에 Firebase 콘솔에서 복사한 `firebaseConfig` 코드를 붙여넣으세요!
-        //
-        // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
-        // ===================================================================================
-        // ===================================================================================
         const firebaseConfig = {
-  apiKey: "AIzaSyChoYhcEbrhx-CXKpdx8b8xkC0-fgD21bI",
-  authDomain: "hous-ee57f.firebaseapp.com",
-  projectId: "hous-ee57f",
-  storageBucket: "hous-ee57f.firebasestorage.app",
-  messagingSenderId: "934241900463",
-  appId: "1:934241900463:web:80726fb82373313d35015a",
-  measurementId: "G-7EEJKMS8XZ"
-};
+            apiKey: "AIzaSyChoYhcEbrhx-CXKpdx8b8xkC0-fgD21bI",
+            authDomain: "hous-ee57f.firebaseapp.com",
+            projectId: "hous-ee57f",
+            storageBucket: "hous-ee57f.appspot.com",
+            messagingSenderId: "934241900463",
+            appId: "1:934241900463:web:80726fb82373313d35015a",
+            measurementId: "G-7EEJKMS8XZ"
+        };
+        // ===================================================================================
         
-        // --- DOM 요소 ---
         const loadingOverlay = document.getElementById('loading-overlay');
         const loadingText = document.getElementById('loading-text');
 
-        // ----------------------------------------------------------------------------------
-        // 중요: Firebase 설정 값 확인
-        // ----------------------------------------------------------------------------------
         if (firebaseConfig.apiKey === "YOUR_API_KEY" || firebaseConfig.projectId === "YOUR_PROJECT_ID") {
             const loadingSpinner = loadingOverlay.querySelector('svg');
             if(loadingSpinner) loadingSpinner.style.display = 'none';
-            loadingText.innerHTML = `
-                <div class="text-center p-4">
-                    <h2 class="text-xl font-bold text-red-600 mb-4">설정 오류!</h2>
-                    <p class="text-gray-700 dark:text-gray-300">Firebase 설정이 완료되지 않았습니다.</p>
-                    <p class="text-gray-600 dark:text-gray-400 mt-2 text-sm">
-                        HTML 파일의 &lt;script&gt; 태그 안에서<br>
-                        <code class="bg-gray-200 dark:bg-gray-700 p-1 rounded">firebaseConfig</code> 변수를<br>
-                        자신의 Firebase 프로젝트 값으로 교체해주세요.
-                    </p>
-                </div>
-            `;
+            loadingText.innerHTML = `<div class="text-center p-4"><h2 class="text-xl font-bold text-red-600 mb-4">설정 오류!</h2><p class="text-gray-700 dark:text-gray-300">Firebase 설정이 완료되지 않았습니다.</p><p class="text-gray-600 dark:text-gray-400 mt-2 text-sm">HTML 파일의 &lt;script&gt; 태그 안에서<br><code class="bg-gray-200 dark:bg-gray-700 p-1 rounded">firebaseConfig</code> 변수를<br>자신의 Firebase 프로젝트 값으로 교체해주세요.</p></div>`;
         } else {
             initializeAppAndRun();
         }
         
         function initializeAppAndRun() {
-            // Firebase 앱 초기화
             const app = initializeApp(firebaseConfig);
             const db = getFirestore(app);
             const auth = getAuth(app);
-
-            // --- 상태 관리 ---
+            
             let transactions = [], incomeCategories = [], expenseCategories = [], assetGroups = [], assets = [];
             let chartInstance = null, incomeChartInstance = null, expenseChartInstance = null, categoryModalContext = { type: null };
             let currentUserId = null;
-            let unsubscribeListeners = []; // 실시간 리스너 구독 해제 함수들을 저장할 배열
-
-            // --- DOM 요소 (loadingOverlay, loadingText 제외) ---
-            const themeSelector = document.getElementById('theme-selector'), themeButtons = document.querySelectorAll('.theme-btn'), pages = document.querySelectorAll('main > div[id$="-page"]'), navButtons = document.querySelectorAll('.nav-btn'), summarySection = document.getElementById('summary-section'), transactionList = document.getElementById('transaction-list'), statsTransactionList = document.getElementById('stats-transaction-list'), chartCanvas = document.getElementById('transactionChart'), incomeCategoryChartCanvas = document.getElementById('incomeCategoryChart'), expenseCategoryChartCanvas = document.getElementById('expenseCategoryChart'), modal = document.getElementById('modal'), modalContent = document.getElementById('modal-content'), modalTitle = document.getElementById('modal-title'), addTransactionBtn = document.getElementById('add-transaction-btn'), closeModalBtn = document.getElementById('close-modal-btn'), transactionForm = document.getElementById('transaction-form'), categorySelect = document.getElementById('category'), subcategorySelect = document.getElementById('subcategory'), subcategoryContainer = document.getElementById('subcategory-container'), typeRadios = document.querySelectorAll('input[name="type"]'), settingsBtn = document.getElementById('settings-btn'), settingsModal = document.getElementById('settings-modal'), settingsModalContent = document.getElementById('settings-modal-content'), closeSettingsModalBtn = document.getElementById('close-settings-modal-btn'), importFileInput = document.getElementById('import-file-input'), fileNameDisplay = document.getElementById('file-name-display'), assetGroupsList = document.getElementById('asset-groups-list'), newAssetGroupInput = document.getElementById('new-asset-group-input'), addAssetGroupBtn = document.getElementById('add-asset-group-btn'), addAssetForm = document.getElementById('add-asset-form'), assetGroupSelect = document.getElementById('asset-group-select'), assetsList = document.getElementById('assets-list'), categoryModal = document.getElementById('category-modal'), categoryModalContent = document.getElementById('category-modal-content'), categoryModalTitle = document.getElementById('category-modal-title'), addCategoryForm = document.getElementById('add-category-form'), addCategoryNameInput = document.getElementById('add-category-name-input'), closeCategoryModalBtn = document.getElementById('close-category-modal-btn'), openAddMainCategoryModalBtn = document.getElementById('open-add-main-category-modal-btn'), openAddSubcategoryModalBtn = document.getElementById('open-add-subcategory-modal-btn'), statsTabs = document.getElementById('stats-tabs'), statsTabButtons = document.querySelectorAll('.stats-tab-btn'), statsChartsContent = document.getElementById('stats-charts-content'), statsHistoryContent = document.getElementById('stats-history-content');
+            let unsubscribeListeners = []; 
             
-            // --- 데이터베이스 레퍼런스 ---
-            const getRefs = () => ({
-                transactionsCol: collection(db, `users/${currentUserId}/transactions`),
-                assetsCol: collection(db, `users/${currentUserId}/assets`),
-                appDataDoc: doc(db, `users/${currentUserId}/appData/data`)
-            });
-
-            // --- 데이터 초기화 (최초 사용자) ---
-            const initializeUserData = async () => {
-                const { appDataDoc } = getRefs();
-                const docSnap = await getDoc(appDataDoc);
-
-                if (!docSnap.exists()) {
-                    // 최초 사용자인 경우, 기본 데이터 생성
-                    const initialData = {
-                        incomeCategories: [{ name: '월급', subcategories: [] }, { name: '용돈', subcategories: [] }, { name: '사업 소득', subcategories: ['프로젝트A', '프로젝트B'] }, { name: '기타', subcategories: [] }],
-                        expenseCategories: [{ name: '식비', subcategories: ['외식', '배달', '장보기'] }, { name: '교통', subcategories: ['버스/지하철', '택시', '주유'] }, { name: '쇼핑', subcategories: ['의류', '생활용품'] }, { name: '주거/통신', subcategories: ['월세', '관리비', '통신비'] }, { name: '기타', subcategories: [] }],
-                        assetGroups: ['현금', '은행', '카드', '적금']
-                    };
-                    await setDoc(appDataDoc, initialData);
-
-                    // 최초 트랜잭션/자산 데이터도 추가
-                    const batch = writeBatch(db);
-                    const { transactionsCol, assetsCol } = getRefs();
-                    batch.set(doc(transactionsCol), { description: '9월 급여', amount: 2000000, date: '2025-09-01', type: 'income', category: '월급', subcategory: null });
-                    batch.set(doc(assetsCol), { group: '은행', name: '내 주거래 통장', initialAmount: 1500000, memo: '월급 통장' });
-                    await batch.commit();
-                }
-            };
-
-            // --- 실시간 데이터 구독 ---
-            const setupRealtimeListeners = () => {
-                // 기존 리스너 모두 구독 해제
-                unsubscribeListeners.forEach(unsub => unsub());
-                unsubscribeListeners = [];
-
-                const { transactionsCol, assetsCol, appDataDoc } = getRefs();
-                
-                // 거래내역
-                const unsubTransactions = onSnapshot(transactionsCol, (snapshot) => {
-                    transactions = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                    renderSummary();
-                    renderTransactionList();
-                });
-
-                // 자산
-                const unsubAssets = onSnapshot(assetsCol, (snapshot) => {
-                    assets = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                    if(document.getElementById('assets-page').classList.contains('hidden') === false) {
-                       renderAssetsList();
-                    }
-                });
-
-                // 카테고리, 자산 그룹 등
-                const unsubAppData = onSnapshot(appDataDoc, (docSnap) => {
-                    if (docSnap.exists()) {
-                        const data = docSnap.data();
-                        incomeCategories = data.incomeCategories || [];
-                        expenseCategories = data.expenseCategories || [];
-                        assetGroups = data.assetGroups || [];
-                        if(document.getElementById('assets-page').classList.contains('hidden') === false) {
-                            renderAssetGroups();
-                        }
-                    }
-                });
-                
-                unsubscribeListeners.push(unsubTransactions, unsubAssets, unsubAppData);
-            };
+            const themeSelector = document.getElementById('theme-selector'), themeButtons = document.querySelectorAll('.theme-btn'), pages = document.querySelectorAll('main > div[id$="-page"]'), navButtons = document.querySelectorAll('.nav-btn'), summarySection = document.getElementById('summary-section'), transactionList = document.getElementById('transaction-list'), statsTransactionList = document.getElementById('stats-transaction-list'), chartCanvas = document.getElementById('transactionChart'), incomeCategoryChartCanvas = document.getElementById('incomeCategoryChart'), expenseCategoryChartCanvas = document.getElementById('expenseCategoryChart'), modal = document.getElementById('modal'), modalContent = document.getElementById('modal-content'), modalTitle = document.getElementById('modal-title'), addTransactionBtn = document.getElementById('add-transaction-btn'), closeModalBtn = document.getElementById('close-modal-btn'), transactionForm = document.getElementById('transaction-form'), categorySelect = document.getElementById('category'), subcategorySelect = document.getElementById('subcategory'), subcategoryContainer = document.getElementById('subcategory-container'), typeRadios = document.querySelectorAll('input[name="type"]'), settingsBtn = document.getElementById('settings-btn'), settingsModal = document.getElementById('settings-modal'), settingsModalContent = document.getElementById('settings-modal-content'), closeSettingsModalBtn = document.getElementById('close-settings-modal-btn'), importFileInput = document.getElementById('import-file-input'), fileNameDisplay = document.getElementById('file-name-display'), assetGroupsList = document.getElementById('asset-groups-list'), newAssetGroupInput = document.getElementById('new-asset-group-input'), addAssetGroupBtn = document.getElementById('add-asset-group-btn'), addAssetForm = document.getElementById('add-asset-form'), assetGroupSelect = document.getElementById('asset-group-select'), assetsList = document.getElementById('assets-list'), categoryModal = document.getElementById('category-modal'), categoryModalContent = document.getElementById('category-modal-content'), categoryModalTitle = document.getElementById('category-modal-title'), addCategoryForm = document.getElementById('add-category-form'), addCategoryNameInput = document.getElementById('add-category-name-input'), closeCategoryModalBtn = document.getElementById('close-category-modal-btn'), openAddMainCategoryModalBtn = document.getElementById('open-add-main-category-modal-btn'), openAddSubcategoryModalBtn = document.getElementById('open-add-subcategory-modal-btn'), statsTabs = document.getElementById('stats-tabs'), statsTabButtons = document.querySelectorAll('.stats-tab-btn'), statsChartsContent = document.getElementById('stats-charts-content'), statsHistoryContent = document.getElementById('stats-history-content'), authModal = document.getElementById('auth-modal'), authModalContent = document.getElementById('auth-modal-content'), closeAuthModalBtn = document.getElementById('close-auth-modal-btn'), accountInfo = document.getElementById('account-info'), googleSigninBtn = document.getElementById('google-signin-btn'), emailPasswordForm = document.getElementById('email-password-form');
             
-            // --- 테마 관리 ---
+            const getRefs = () => ({ transactionsCol: collection(db, `users/${currentUserId}/transactions`), assetsCol: collection(db, `users/${currentUserId}/assets`), appDataDoc: doc(db, `users/${currentUserId}/appData/data`) });
+            
+            const initializeUserData = async () => { const { appDataDoc } = getRefs(); const docSnap = await getDoc(appDataDoc); if (!docSnap.exists()) { const initialData = { incomeCategories: [{ name: '월급', subcategories: [] }, { name: '용돈', subcategories: [] }, { name: '사업 소득', subcategories: ['프로젝트A', '프로젝트B'] }, { name: '기타', subcategories: [] }], expenseCategories: [{ name: '식비', subcategories: ['외식', '배달', '장보기'] }, { name: '교통', subcategories: ['버스/지하철', '택시', '주유'] }, { name: '쇼핑', subcategories: ['의류', '생활용품'] }, { name: '주거/통신', subcategories: ['월세', '관리비', '통신비'] }, { name: '기타', subcategories: [] }], assetGroups: ['현금', '은행', '카드', '적금'] }; await setDoc(appDataDoc, initialData); const batch = writeBatch(db); const { transactionsCol, assetsCol } = getRefs(); batch.set(doc(transactionsCol), { description: '9월 급여', amount: 2000000, date: '2025-09-01', type: 'income', category: '월급', subcategory: null }); batch.set(doc(assetsCol), { group: '은행', name: '내 주거래 통장', initialAmount: 1500000, memo: '월급 통장' }); await batch.commit(); } };
+            
+            const setupRealtimeListeners = () => { unsubscribeListeners.forEach(unsub => unsub()); unsubscribeListeners = []; const { transactionsCol, assetsCol, appDataDoc } = getRefs(); const unsubTransactions = onSnapshot(transactionsCol, (snapshot) => { transactions = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })); renderSummary(); renderTransactionList(); }); const unsubAssets = onSnapshot(assetsCol, (snapshot) => { assets = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })); if(!document.getElementById('assets-page').classList.contains('hidden')) renderAssetsList(); }); const unsubAppData = onSnapshot(appDataDoc, (docSnap) => { if (docSnap.exists()) { const data = docSnap.data(); incomeCategories = data.incomeCategories || []; expenseCategories = data.expenseCategories || []; assetGroups = data.assetGroups || []; if(!document.getElementById('assets-page').classList.contains('hidden')) renderAssetGroups(); } }); unsubscribeListeners.push(unsubTransactions, unsubAssets, unsubAppData); };
+            
+            const renderAccountInfo = (user) => { if(user && !user.isAnonymous) { accountInfo.innerHTML = `<div class="flex items-center justify-between"><p class="text-sm text-gray-700 dark:text-gray-300">로그인 계정: <span class="font-semibold">${user.email || user.displayName}</span></p><button id="logout-btn" class="text-sm font-semibold text-red-500 hover:text-red-700">로그아웃</button></div>`; document.getElementById('logout-btn').addEventListener('click', () => signOut(auth)); } else { accountInfo.innerHTML = `<p class="text-sm text-gray-600 dark:text-gray-400 mb-2">계정에 연결하여 여러 기기에서 데이터를 안전하게 동기화하세요.</p><button id="open-auth-modal-btn" class="w-full bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300">로그인 / 회원가입</button>`; document.getElementById('open-auth-modal-btn').addEventListener('click', () => openModalAnimator(authModal, authModalContent)); } };
+            
             const updateThemeButtons = (selectedTheme) => { themeButtons.forEach(button => { if (button.dataset.theme === selectedTheme) { button.classList.add('bg-indigo-600', 'text-white'); button.classList.remove('text-gray-700', 'dark:text-gray-300'); } else { button.classList.remove('bg-indigo-600', 'text-white'); button.classList.add('text-gray-700', 'dark:text-gray-300'); } }); };
             const applyTheme = (theme) => { updateThemeButtons(theme); if (theme === 'system') { if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) { document.documentElement.classList.add('dark'); } else { document.documentElement.classList.remove('dark'); } } else if (theme === 'dark') { document.documentElement.classList.add('dark'); } else { document.documentElement.classList.remove('dark'); } };
-            
-            // --- 페이지 네비게이션 ---
             const showPage = (pageId) => { pages.forEach(page => page.classList.add('hidden')); document.getElementById(pageId)?.classList.remove('hidden'); navButtons.forEach(btn => { btn.classList.toggle('text-indigo-600', btn.dataset.page === pageId); btn.classList.toggle('text-gray-500', btn.dataset.page !== pageId); }); if (pageId === 'assets-page') { renderAssetGroups(); renderAssetsList(); } if (pageId === 'stats-page') { handleStatsTabClick('charts'); } };
             const handleStatsTabClick = (tabId) => { statsTabButtons.forEach(btn => { const isSelected = btn.dataset.tab === tabId; btn.classList.toggle('text-indigo-600', isSelected); btn.classList.toggle('border-indigo-500', isSelected); btn.classList.toggle('text-gray-500', !isSelected); btn.classList.toggle('border-transparent', !isSelected); }); statsChartsContent.classList.toggle('hidden', tabId !== 'charts'); statsHistoryContent.classList.toggle('hidden', tabId !== 'history'); if (tabId === 'charts') { renderMainChart(); incomeChartInstance = renderCategoryChart(incomeCategoryChartCanvas, incomeChartInstance, 'income', '카테고리별 수입', ['#4ade80', '#86efac', '#22c55e', '#16a34a', '#15803d']); expenseChartInstance = renderCategoryChart(expenseCategoryChartCanvas, expenseChartInstance, 'expense', '카테고리별 지출', ['#f87171', '#fb923c', '#ef4444', '#dc2626', '#b91c1c', '#f59e0b']); } };
 
-            // --- 렌더링 함수 ---
             const formatCurrency = (amount) => new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(amount);
             const renderSummary = () => { const totalIncome = transactions.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0); const totalExpense = transactions.filter(t => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0); summarySection.innerHTML = `<div class="bg-indigo-100 text-indigo-800 p-4 rounded-xl text-center"><h3 class="font-semibold text-sm">현재 잔액</h3><p class="text-2xl font-bold mt-1">${formatCurrency(totalIncome - totalExpense)}</p></div><div class="bg-green-100 text-green-800 p-4 rounded-xl text-center"><h3 class="font-semibold text-sm">총 수입</h3><p class="text-2xl font-bold mt-1">${formatCurrency(totalIncome)}</p></div><div class="bg-red-100 text-red-800 p-4 rounded-xl text-center"><h3 class="font-semibold text-sm">총 지출</h3><p class="text-2xl font-bold mt-1">${formatCurrency(totalExpense)}</p></div>`; };
             const renderTransactionList = () => { [transactionList, statsTransactionList].forEach(list => { if (!list) return; list.innerHTML = ''; if (transactions.length === 0) { list.innerHTML = `<li class="text-center text-gray-500 p-4">거래 내역이 없습니다.</li>`; return; } [...transactions].sort((a, b) => new Date(b.date) - new Date(a.date)).forEach(t => { const isIncome = t.type === 'income'; const categoryDisplay = t.subcategory ? `${t.category} &gt; ${t.subcategory}` : t.category; const li = document.createElement('li'); li.className = 'flex justify-between items-center p-3 bg-gray-50 rounded-lg'; li.innerHTML = `<div class="flex-grow"><div class="flex items-center gap-2 flex-wrap"><p class="font-semibold">${t.description}</p><span class="text-xs bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full">${categoryDisplay}</span></div><p class="text-sm text-gray-500">${t.date}</p></div><div class="flex items-center shrink-0"><span class="font-semibold ${isIncome ? 'text-green-600' : 'text-red-600'}">${isIncome ? '+' : '-'} ${formatCurrency(t.amount)}</span><button data-id="${t.id}" class="edit-btn ml-3 text-gray-400 hover:text-blue-500 p-1 rounded-full transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.5L16.732 3.732z"></path></svg></button><button data-id="${t.id}" class="delete-btn text-gray-400 hover:text-red-500 p-1 rounded-full transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button></div>`; list.appendChild(li); }); }); };
@@ -319,7 +242,9 @@
             const handleDeleteTransaction = async (id) => { await deleteDoc(doc(db, `users/${currentUserId}/transactions/${id}`)); };
             const handleFormSubmit = async (event) => { event.preventDefault(); const id = event.target.elements['transaction-id'].value; const transactionData = { type: event.target.elements.type.value, description: event.target.elements.description.value, amount: +event.target.elements.amount.value, date: event.target.elements.date.value, category: event.target.elements.category.value, subcategory: event.target.elements.subcategory.value || null }; if (id) { const docRef = doc(db, `users/${currentUserId}/transactions/${id}`); await updateDoc(docRef, transactionData); } else { await addDoc(getRefs().transactionsCol, transactionData); } closeTransactionModal(); };
             const handleFileImport = (event) => { const file = event.target.files[0]; if (!file) return; fileNameDisplay.textContent = `"${file.name}" 파일이 선택되었습니다.`; setTimeout(() => { alert(`[시뮬레이션] 파일 가져오기 기능은 Firebase 연동 후에는 지원되지 않습니다.`); closeSettingsModal(); }, 500); };
-
+            const handleGoogleSignIn = async () => { const provider = new GoogleAuthProvider(); try { const userCredential = await signInWithPopup(auth, provider); closeModalAnimator(authModal, authModalContent); } catch(error) { if (error.code === 'auth/credential-already-in-use') { alert('이미 다른 계정에 연결된 구글 계정입니다.'); } else { console.error("Google sign in error", error); } } };
+            const handleEmailPasswordAuth = async (e) => { e.preventDefault(); const email = document.getElementById('email-input').value; const password = document.getElementById('password-input').value; try { const userCredential = await signInWithEmailAndPassword(auth, email, password); closeModalAnimator(authModal, authModalContent); } catch(error) { if (error.code === 'auth/user-not-found') { try { const userCredential = await createUserWithEmailAndPassword(auth, email, password); closeModalAnimator(authModal, authModalContent); } catch (createError) { alert(`회원가입 실패: ${createError.message}`); } } else if (error.code === 'auth/wrong-password') { alert('비밀번호가 틀렸습니다.'); } else { console.error("Email auth error", error); alert(`오류 발생: ${error.message}`); } } };
+            
             // --- 이벤트 리스너 설정 ---
             themeSelector.addEventListener('click', (e) => { const selectedButton = e.target.closest('.theme-btn'); if (selectedButton) { const newTheme = selectedButton.dataset.theme; localStorage.setItem('theme', newTheme); applyTheme(newTheme); } });
             window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => { const savedTheme = localStorage.getItem('theme') || 'system'; if (savedTheme === 'system') { applyTheme('system'); } });
@@ -333,8 +258,8 @@
             categorySelect.addEventListener('change', updateSubcategoryOptions);
             openAddMainCategoryModalBtn.addEventListener('click', () => openCategoryModal('main'));
             openAddSubcategoryModalBtn.addEventListener('click', () => openCategoryModal('sub'));
-            closeCategoryModalBtn.addEventListener('click', closeCategoryModal);
-            categoryModal.addEventListener('click', (e) => { if (e.target === categoryModal) closeCategoryModal(); });
+            closeCategoryModalBtn.addEventListener('click', () => closeModalAnimator(categoryModal, categoryModalContent));
+            categoryModal.addEventListener('click', (e) => { if (e.target === categoryModal) closeModalAnimator(categoryModal, categoryModalContent); });
             addCategoryForm.addEventListener('submit', (e) => { e.preventDefault(); if (categoryModalContext.type === 'main') { handleAddMainCategory(); } else if (categoryModalContext.type === 'sub') { handleAddSubcategory(); } });
             settingsBtn.addEventListener('click', openSettingsModal);
             closeSettingsModalBtn.addEventListener('click', closeSettingsModal);
@@ -346,54 +271,34 @@
             assetGroupsList.addEventListener('click', (e) => { if (e.target.closest('button')?.dataset.group) { handleDeleteAssetGroup(e.target.closest('button').dataset.group); } });
             assetsList.addEventListener('click', (e) => { if (e.target.closest('button')?.dataset.id) { handleDeleteAsset(e.target.closest('button').dataset.id); } });
             [transactionList, statsTransactionList].forEach(list => { if (!list) return; list.addEventListener('click', (e) => { const actionButton = e.target.closest('.delete-btn, .edit-btn'); if (actionButton) { const transactionId = actionButton.dataset.id; if (actionButton.classList.contains('delete-btn')) { handleDeleteTransaction(transactionId); } else if (actionButton.classList.contains('edit-btn')) { openTransactionModal(transactionId); } } }); });
+            closeAuthModalBtn.addEventListener('click', () => closeModalAnimator(authModal, authModalContent));
+            authModal.addEventListener('click', (e) => { if(e.target === authModal) closeModalAnimator(authModal, authModalContent); });
+            googleSigninBtn.addEventListener('click', handleGoogleSignIn);
+            emailPasswordForm.addEventListener('submit', handleEmailPasswordAuth);
 
             // --- 앱 초기화 ---
             onAuthStateChanged(auth, async (user) => {
                 if (user) {
-                    // 사용자가 로그인됨 (익명 포함)
+                    if (currentUserId === user.uid) return;
                     currentUserId = user.uid;
-                    
-                    // 먼저 로딩 화면을 숨겨서 앱이 빠르게 느껴지도록 합니다.
+                    renderAccountInfo(user);
+                    if(user.isAnonymous) {
+                        await initializeUserData();
+                    }
+                    setupRealtimeListeners();
                     loadingOverlay.style.opacity = '0';
                     setTimeout(() => { loadingOverlay.style.display = 'none'; }, 300);
-
-                    // 데이터는 백그라운드에서 비동기적으로 불러오고 초기화합니다.
-                    await initializeUserData();
-                    setupRealtimeListeners();
-                    
                 } else {
-                    // 사용자가 로그아웃됨
                     signInAnonymously(auth).catch((error) => {
                         console.error("Anonymous sign-in failed:", error);
                         const loadingSpinner = loadingOverlay.querySelector('svg');
                         if(loadingSpinner) loadingSpinner.style.display = 'none';
-                        
-                        let title = "연결 오류!";
-                        let message = `
-                            인터넷 연결을 확인하거나,<br>
-                            Firebase 설정(firebaseConfig)이 올바른지<br>
-                            다시 한번 확인해주세요.
-                        `;
-
+                        let title = "연결 오류!"; let message = `인터넷 연결을 확인하거나,<br>Firebase 설정(firebaseConfig)이 올바른지<br>다시 한번 확인해주세요.`;
                         if (error.code === 'auth/configuration-not-found') {
                             title = "Firebase 설정 필요!";
-                            message = `
-                                Firebase 프로젝트에서 '익명 로그인'이<br>
-                                활성화되지 않았습니다.<br>
-                                <br>
-                                <strong class="font-bold">Firebase 콘솔 &gt; Authentication &gt; Sign-in method</strong><br>
-                                메뉴에서 '익명'을 사용 설정해주세요.
-                            `;
+                            message = `Firebase 프로젝트에서 '익명 로그인'이<br>활성화되지 않았습니다.<br><br><strong class="font-bold">Firebase 콘솔 &gt; Authentication &gt; Sign-in method</strong><br>메뉴에서 '익명'을 사용 설정해주세요.`;
                         }
-
-                        loadingText.innerHTML = `
-                            <div class="text-center p-4">
-                                <h2 class="text-xl font-bold text-red-600 mb-4">${title}</h2>
-                                <p class="text-gray-600 dark:text-gray-400 mt-2 text-sm">
-                                    ${message}
-                                </p>
-                            </div>
-                        `;
+                        loadingText.innerHTML = `<div class="text-center p-4"><h2 class="text-xl font-bold text-red-600 mb-4">${title}</h2><p class="text-gray-600 dark:text-gray-400 mt-2 text-sm">${message}</p></div>`;
                     });
                 }
             });
