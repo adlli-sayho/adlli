@@ -2,11 +2,225 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>테스트 페이지</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나의 가계부</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- 문제가 되었을 가능성이 높은 Base64 인코딩 링크들을 제거했습니다. -->
+    <!-- 이로 인해 '홈 화면에 추가' 시 아이콘이 제대로 보이지 않을 수 있지만, 앱의 핵심 기능은 모두 정상 동작합니다. -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#4f46e5">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .modal-enter { opacity: 0; transform: scale(0.95); }
+        .modal-enter-active { opacity: 1; transform: scale(1); transition: opacity 300ms, transform 300ms; }
+        .modal-exit { opacity: 1; transform: scale(1); }
+        .modal-exit-active { opacity: 0; transform: scale(0.95); transition: opacity 300ms, transform 300ms; }
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
+    </style>
 </head>
-<body>
-    <h1>안녕하세요!</h1>
-    <p>이 페이지가 보인다면, 배포 자체는 성공한 것입니다.</p>
+<body class="bg-gray-100 pb-20">
+
+    <div id="app" class="container mx-auto p-4 max-w-2xl">
+        <main>
+            <!-- 홈 페이지 -->
+            <div id="home-page">
+                <div class="bg-white p-6 rounded-2xl shadow-lg w-full">
+                    <header class="mb-6 relative">
+                        <h1 class="text-3xl font-bold text-gray-800 text-center">나의 가계부</h1>
+                        <p class="text-center text-gray-500 mt-2">수입과 지출을 관리하여 자산을 늘려보세요.</p>
+                        <div class="absolute top-0 right-0">
+                            <button id="settings-btn" class="text-gray-500 hover:text-gray-800 p-2 rounded-full transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.096 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                            </button>
+                        </div>
+                    </header>
+                    <section id="summary-section" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6"></section>
+                    <section class="mb-6"><button id="add-transaction-btn" class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-700 transition duration-300">거래 내역 추가하기</button></section>
+                    <section class="mb-6"><h2 class="text-xl font-bold text-gray-700 mb-4">최근 내역</h2><ul id="transaction-list" class="space-y-3"></ul></section>
+                </div>
+            </div>
+
+            <!-- 통계 페이지 -->
+            <div id="stats-page" class="hidden">
+                 <div class="bg-white p-6 rounded-2xl shadow-lg w-full">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">수입/지출 분석</h2>
+                    <div class="mb-4 border-b border-gray-200">
+                        <nav class="flex -mb-px" id="stats-tabs">
+                            <button data-tab="charts" class="stats-tab-btn whitespace-nowrap py-3 px-4 border-b-2 font-medium text-sm text-indigo-600 border-indigo-500">분석 차트</button>
+                            <button data-tab="history" class="stats-tab-btn whitespace-nowrap py-3 px-4 border-b-2 font-medium text-sm text-gray-500 border-transparent hover:text-gray-700 hover:border-gray-300">전체 내역</button>
+                        </nav>
+                    </div>
+                    <div id="stats-charts-content">
+                        <div class="p-4 bg-gray-50 rounded-lg mb-4"><canvas id="transactionChart"></canvas></div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="p-4 bg-gray-50 rounded-lg"><canvas id="incomeCategoryChart"></canvas></div>
+                            <div class="p-4 bg-gray-50 rounded-lg"><canvas id="expenseCategoryChart"></canvas></div>
+                        </div>
+                    </div>
+                    <div id="stats-history-content" class="hidden">
+                        <ul id="stats-transaction-list" class="space-y-3"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 자산 페이지 -->
+            <div id="assets-page" class="hidden">
+                <div class="bg-white p-6 rounded-2xl shadow-lg w-full">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">자산 관리</h2>
+                    <div class="mb-4"><label class="block text-gray-700 font-semibold mb-2">자산 그룹</label><div id="asset-groups-list" class="flex flex-wrap gap-2 mb-2"></div><div class="flex gap-2 mt-2"><input type="text" id="new-asset-group-input" placeholder="새 자산 그룹 추가" class="w-full p-2 border border-gray-300 rounded-lg"><button type="button" id="add-asset-group-btn" class="bg-gray-200 text-gray-800 font-semibold px-4 py-2 rounded-lg hover:bg-gray-300">추가</button></div></div>
+                    <div class="border-t pt-4"><label class="block text-gray-700 font-semibold mb-2">새 자산 추가</label><form id="add-asset-form"><div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-2"><select id="asset-group-select" required class="w-full p-2 border border-gray-300 rounded-lg"></select><input type="text" id="asset-name-input" placeholder="자산 이름" required class="w-full p-2 border border-gray-300 rounded-lg"></div><input type="number" id="asset-initial-amount-input" placeholder="초기 금액" required class="w-full p-2 border border-gray-300 rounded-lg mb-2"><textarea id="asset-memo-input" placeholder="메모" rows="2" class="w-full p-2 border border-gray-300 rounded-lg mb-2"></textarea><button type="submit" class="w-full bg-indigo-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-600 transition duration-300">자산 추가</button></form></div>
+                    <div class="mt-4 border-t pt-4"><h4 class="font-semibold text-gray-600 mb-2">자산 목록</h4><ul id="assets-list" class="space-y-2"></ul></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="modal" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center p-4 hidden z-50">
+        <div id="modal-content" class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 modal-enter"><div class="flex justify-between items-center mb-6"><h2 class="text-2xl font-bold text-gray-800">새 거래 내역</h2><button id="close-modal-btn" class="text-gray-400 hover:text-gray-600 text-3xl leading-none">&times;</button></div><form id="transaction-form" class="max-h-[70vh] overflow-y-auto pr-2"><div class="mb-4"><label class="block text-gray-700 font-semibold mb-2">종류</label><div class="flex gap-4"><label class="flex items-center"><input type="radio" name="type" value="income" class="form-radio text-green-500" checked><span class="ml-2 text-gray-700">수입</span></label><label class="flex items-center"><input type="radio" name="type" value="expense" class="form-radio text-red-500"><span class="ml-2 text-gray-700">지출</span></label></div></div><div class="mb-4"><div class="flex justify-between items-center mb-1"><label for="category" class="text-gray-700 font-semibold">기본 카테고리</label><button type="button" id="open-add-main-category-modal-btn" class="p-1 rounded-full hover:bg-gray-200"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg></button></div><select id="category" class="w-full p-2 border border-gray-300 rounded-lg" required></select></div><div class="mb-4 hidden" id="subcategory-container"><div class="flex justify-between items-center mb-1"><label for="subcategory" class="text-gray-700 font-semibold">세부 카테고리</label><button type="button" id="open-add-subcategory-modal-btn" class="p-1 rounded-full hover:bg-gray-200"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg></button></div><select id="subcategory" class="w-full p-2 border border-gray-300 rounded-lg"></select></div><div class="mb-4 border-t pt-4"><label for="description" class="block text-gray-700 font-semibold mb-2">내역</label><input type="text" id="description" class="w-full p-2 border border-gray-300 rounded-lg" required></div><div class="mb-4"><label for="amount" class="block text-gray-700 font-semibold mb-2">금액</label><input type="number" id="amount" class="w-full p-2 border border-gray-300 rounded-lg" required></div><div class="mb-6"><label for="date" class="block text-gray-700 font-semibold mb-2">날짜</label><input type="date" id="date" class="w-full p-2 border border-gray-300 rounded-lg" required></div><button type="submit" class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-700 transition duration-300">저장하기</button></form></div>
+    </div>
+    <div id="settings-modal" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center p-4 hidden z-50">
+        <div id="settings-modal-content" class="bg-white rounded-2xl shadow-xl w-full max-w-lg p-6 modal-enter max-h-[90vh] flex flex-col"><div class="flex justify-between items-center mb-6 flex-shrink-0"><h2 class="text-2xl font-bold text-gray-800">설정</h2><button id="close-settings-modal-btn" class="text-gray-400 hover:text-gray-600 text-3xl leading-none">&times;</button></div><div class="overflow-y-auto pr-2"><div class="mb-6"><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">데이터 관리</h3><p class="text-sm text-gray-600 mb-3">은행/카드사에서 내려받은 거래내역 파일(.csv, .txt)을 가져올 수 있습니다.</p><div><label for="import-file-input" class="w-full cursor-pointer bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300 inline-block text-center">파일에서 내역 가져오기</label><input type="file" id="import-file-input" class="hidden" accept=".csv, .txt"><p id="file-name-display" class="text-sm text-gray-500 mt-2 text-center"></p></div></div><div class="mb-6"><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">앱 설치</h3><p class="text-sm text-gray-600">이 웹사이트를 홈 화면에 추가하여 앱처럼 사용할 수 있습니다. 사용 중인 브라우저의 '홈 화면에 추가' 메뉴를 찾아보세요.</p></div></div></div>
+    </div>
+    <div id="category-modal" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center p-4 hidden z-[60]">
+        <div id="category-modal-content" class="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6 modal-enter"><h2 id="category-modal-title" class="text-2xl font-bold text-gray-800 mb-4">카테고리 추가</h2><form id="add-category-form"><input type="text" id="add-category-name-input" placeholder="카테고리 이름" class="w-full p-2 border border-gray-300 rounded-lg mb-4" required><div class="flex gap-2"><button type="button" id="close-category-modal-btn" class="w-full bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300">취소</button><button type="submit" class="w-full bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-700">저장</button></div></form></div>
+    </div>
+
+    <!-- 하단 네비게이션 메뉴 -->
+    <nav id="bottom-nav" class="fixed bottom-0 left-0 w-full bg-white border-t z-10">
+        <div class="flex justify-around max-w-2xl mx-auto">
+            <button data-page="home-page" class="nav-btn flex-1 text-center py-2 text-indigo-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+                <span class="text-xs font-medium">홈</span>
+            </button>
+            <button data-page="stats-page" class="nav-btn flex-1 text-center py-2 text-gray-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                <span class="text-xs font-medium">통계</span>
+            </button>
+            <button data-page="assets-page" class="nav-btn flex-1 text-center py-2 text-gray-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>
+                <span class="text-xs font-medium">자산</span>
+            </button>
+        </div>
+    </nav>
+
+    <script>
+        // --- 상태 관리 ---
+        let transactions = [ { id: 1, description: '9월 급여', amount: 2000000, date: '2025-09-01', type: 'income', category: '월급', subcategory: null }, { id: 2, description: '점심 식사', amount: 15000, date: '2025-09-02', type: 'expense', category: '식비', subcategory: '외식' }, { id: 3, description: '출근 버스', amount: 50000, date: '2025-09-03', type: 'expense', category: '교통', subcategory: '버스/지하철' } ];
+        let incomeCategories = [{ name: '월급', subcategories: [] }, { name: '용돈', subcategories: [] }, { name: '사업 소득', subcategories: ['프로젝트A', '프로젝트B'] }, { name: '기타', subcategories: [] }];
+        let expenseCategories = [{ name: '식비', subcategories: ['외식', '배달', '장보기'] }, { name: '교통', subcategories: ['버스/지하철', '택시', '주유'] }, { name: '쇼핑', subcategories: ['의류', '생활용품'] }, { name: '주거/통신', subcategories: ['월세', '관리비', '통신비'] }, { name: '기타', subcategories: [] }];
+        let assetGroups = ['현금', '은행', '카드', '적금'];
+        let assets = [ { id: 1, group: '은행', name: '내 주거래 통장', initialAmount: 1500000, memo: '월급 통장' }, { id: 2, group: '카드', name: '생활비 카드', initialAmount: 0, memo: '체크카드 연결' } ];
+        let chartInstance = null, incomeChartInstance = null, expenseChartInstance = null, categoryModalContext = { type: null };
+
+        // --- DOM 요소 ---
+        const pages = document.querySelectorAll('main > div[id$="-page"]'), navButtons = document.querySelectorAll('.nav-btn'), summarySection = document.getElementById('summary-section'), transactionList = document.getElementById('transaction-list'), statsTransactionList = document.getElementById('stats-transaction-list'), chartCanvas = document.getElementById('transactionChart'), incomeCategoryChartCanvas = document.getElementById('incomeCategoryChart'), expenseCategoryChartCanvas = document.getElementById('expenseCategoryChart'), modal = document.getElementById('modal'), modalContent = document.getElementById('modal-content'), addTransactionBtn = document.getElementById('add-transaction-btn'), closeModalBtn = document.getElementById('close-modal-btn'), transactionForm = document.getElementById('transaction-form'), categorySelect = document.getElementById('category'), subcategorySelect = document.getElementById('subcategory'), subcategoryContainer = document.getElementById('subcategory-container'), typeRadios = document.querySelectorAll('input[name="type"]'), settingsBtn = document.getElementById('settings-btn'), settingsModal = document.getElementById('settings-modal'), settingsModalContent = document.getElementById('settings-modal-content'), closeSettingsModalBtn = document.getElementById('close-settings-modal-btn'), importFileInput = document.getElementById('import-file-input'), fileNameDisplay = document.getElementById('file-name-display'), assetGroupsList = document.getElementById('asset-groups-list'), newAssetGroupInput = document.getElementById('new-asset-group-input'), addAssetGroupBtn = document.getElementById('add-asset-group-btn'), addAssetForm = document.getElementById('add-asset-form'), assetGroupSelect = document.getElementById('asset-group-select'), assetsList = document.getElementById('assets-list'), categoryModal = document.getElementById('category-modal'), categoryModalContent = document.getElementById('category-modal-content'), categoryModalTitle = document.getElementById('category-modal-title'), addCategoryForm = document.getElementById('add-category-form'), addCategoryNameInput = document.getElementById('add-category-name-input'), closeCategoryModalBtn = document.getElementById('close-category-modal-btn'), openAddMainCategoryModalBtn = document.getElementById('open-add-main-category-modal-btn'), openAddSubcategoryModalBtn = document.getElementById('open-add-subcategory-modal-btn'), statsTabs = document.getElementById('stats-tabs'), statsTabButtons = document.querySelectorAll('.stats-tab-btn'), statsChartsContent = document.getElementById('stats-charts-content'), statsHistoryContent = document.getElementById('stats-history-content');
+
+        // --- 페이지 네비게이션 ---
+        const showPage = (pageId) => {
+            pages.forEach(page => page.classList.add('hidden'));
+            document.getElementById(pageId)?.classList.remove('hidden');
+            navButtons.forEach(btn => {
+                btn.classList.toggle('text-indigo-600', btn.dataset.page === pageId);
+                btn.classList.toggle('text-gray-500', btn.dataset.page !== pageId);
+            });
+            if (pageId === 'assets-page') { renderAssetGroups(); renderAssetsList(); }
+            if (pageId === 'stats-page') { handleStatsTabClick('charts'); }
+        };
+        
+        const handleStatsTabClick = (tabId) => {
+            statsTabButtons.forEach(btn => {
+                const isSelected = btn.dataset.tab === tabId;
+                btn.classList.toggle('text-indigo-600', isSelected);
+                btn.classList.toggle('border-indigo-500', isSelected);
+                btn.classList.toggle('text-gray-500', !isSelected);
+                btn.classList.toggle('border-transparent', !isSelected);
+            });
+            statsChartsContent.classList.toggle('hidden', tabId !== 'charts');
+            statsHistoryContent.classList.toggle('hidden', tabId !== 'history');
+            if (tabId === 'charts') {
+                renderMainChart();
+                incomeChartInstance = renderCategoryChart(incomeCategoryChartCanvas, incomeChartInstance, 'income', '카테고리별 수입', ['#4ade80', '#86efac', '#22c55e', '#16a34a', '#15803d']);
+                expenseChartInstance = renderCategoryChart(expenseCategoryChartCanvas, expenseChartInstance, 'expense', '카테고리별 지출', ['#f87171', '#fb923c', '#ef4444', '#dc2626', '#b91c1c', '#f59e0b']);
+            }
+        };
+
+        // --- 렌더링 함수 ---
+        const formatCurrency = (amount) => new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(amount);
+        const renderSummary = () => { const totalIncome = transactions.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0); const totalExpense = transactions.filter(t => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0); summarySection.innerHTML = `<div class="bg-indigo-100 text-indigo-800 p-4 rounded-xl text-center"><h3 class="font-semibold text-sm">현재 잔액</h3><p class="text-2xl font-bold mt-1">${formatCurrency(totalIncome - totalExpense)}</p></div><div class="bg-green-100 text-green-800 p-4 rounded-xl text-center"><h3 class="font-semibold text-sm">총 수입</h3><p class="text-2xl font-bold mt-1">${formatCurrency(totalIncome)}</p></div><div class="bg-red-100 text-red-800 p-4 rounded-xl text-center"><h3 class="font-semibold text-sm">총 지출</h3><p class="text-2xl font-bold mt-1">${formatCurrency(totalExpense)}</p></div>`; };
+        const renderTransactionList = () => { 
+            [transactionList, statsTransactionList].forEach(list => {
+                if (!list) return;
+                list.innerHTML = ''; 
+                if (transactions.length === 0) { list.innerHTML = `<li class="text-center text-gray-500 p-4">거래 내역이 없습니다.</li>`; return; } 
+                [...transactions].sort((a, b) => new Date(b.date) - new Date(a.date)).forEach(t => { 
+                    const isIncome = t.type === 'income'; const categoryDisplay = t.subcategory ? `${t.category} &gt; ${t.subcategory}` : t.category; const li = document.createElement('li'); li.className = 'flex justify-between items-center p-3 bg-gray-50 rounded-lg'; li.innerHTML = `<div class="flex-grow"><div class="flex items-center gap-2 flex-wrap"><p class="font-semibold">${t.description}</p><span class="text-xs bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full">${categoryDisplay}</span></div><p class="text-sm text-gray-500">${t.date}</p></div><span class="font-semibold shrink-0 ${isIncome ? 'text-green-600' : 'text-red-600'}">${isIncome ? '+' : '-'} ${formatCurrency(t.amount)}</span>`; list.appendChild(li); 
+                });
+            });
+        };
+        const renderMainChart = () => { const totalIncome = transactions.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0); const totalExpense = transactions.filter(t => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0); if (chartInstance) chartInstance.destroy(); if (!chartCanvas) return; chartInstance = new Chart(chartCanvas, { type: 'doughnut', data: { labels: ['총 수입', '총 지출'], datasets: [{ data: [totalIncome, totalExpense], backgroundColor: ['#4ade80', '#f87171'], borderColor: ['#ffffff'], borderWidth: 2 }] }, options: { responsive: true, plugins: { legend: { position: 'top' }, title: { display: true, text: '총 수입과 지출 비율' } } } }); };
+        const renderCategoryChart = (canvas, instance, type, title, colors) => { if (instance) instance.destroy(); const filteredData = transactions.filter(t => t.type === type); const groupedData = filteredData.reduce((acc, t) => { acc[t.category] = (acc[t.category] || 0) + t.amount; return acc; }, {}); const labels = Object.keys(groupedData); const data = Object.values(groupedData); const parentDiv = canvas.parentElement; const existingMsg = parentDiv.querySelector('.no-data-msg'); if (existingMsg) existingMsg.remove(); if (labels.length === 0) { canvas.style.display = 'none'; const msg = document.createElement('p'); msg.className = 'text-center text-gray-500 py-16 no-data-msg'; msg.textContent = `${type === 'income' ? '수입' : '지출'} 내역이 없습니다.`; parentDiv.appendChild(msg); return null; } canvas.style.display = 'block'; return new Chart(canvas, { type: 'pie', data: { labels, datasets: [{ data, backgroundColor: colors, borderColor: '#ffffff', borderWidth: 2 }] }, options: { responsive: true, plugins: { legend: { position: 'right', align: 'start', labels: { boxWidth: 20, padding: 15 } }, title: { display: true, text: title, font: { size: 16 }, padding: { bottom: 10 } } } } }); };
+        const renderAssetGroups = () => { assetGroupsList.innerHTML = ''; assetGroupSelect.innerHTML = ''; assetGroups.forEach(group => { const div = document.createElement('div'); div.className = 'flex items-center gap-2 bg-gray-100 rounded-full px-3 py-1 text-sm font-medium text-gray-800'; div.innerHTML = `<span>${group}</span> <button data-group="${group}" class="text-gray-400 hover:text-red-500 -mr-1 p-0.5 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg></button>`; assetGroupsList.appendChild(div); const option = document.createElement('option'); option.value = group; option.textContent = group; assetGroupSelect.appendChild(option); }); };
+        const renderAssetsList = () => { assetsList.innerHTML = ''; if(assets.length === 0) { assetsList.innerHTML = '<li class="text-center text-gray-500 text-sm py-2">등록된 자산이 없습니다.</li>'; return; } assets.forEach(asset => { const li = document.createElement('li'); li.className = 'p-3 bg-gray-50 rounded-lg'; li.innerHTML = ` <div class="flex justify-between items-start"> <div> <p class="font-semibold">${asset.name} <span class="text-xs text-gray-500 font-normal">(${asset.group})</span></p> <p class="text-sm text-gray-600">${formatCurrency(asset.initialAmount)}</p> <p class="text-xs text-gray-500 mt-1">${asset.memo || ''}</p> </div> <button data-id="${asset.id}" class="text-red-500 hover:text-red-700 font-bold px-2 shrink-0">삭제</button> </div>`; assetsList.appendChild(li); }); };
+        const updateSubcategoryOptions = () => { const selectedType = document.querySelector('input[name="type"]:checked').value; const categories = selectedType === 'income' ? incomeCategories : expenseCategories; const selectedCategoryName = categorySelect.value; const selectedCategory = categories.find(c => c.name === selectedCategoryName); subcategorySelect.innerHTML = '<option value="">선택 안함</option>'; if (selectedCategory && selectedCategory.subcategories.length > 0) { selectedCategory.subcategories.forEach(sub => subcategorySelect.innerHTML += `<option value="${sub}">${sub}</option>`); subcategoryContainer.classList.remove('hidden'); openAddSubcategoryModalBtn.disabled = false; } else { subcategoryContainer.classList.add('hidden'); openAddSubcategoryModalBtn.disabled = true; } };
+        const updateCategoryOptions = () => { const selectedType = document.querySelector('input[name="type"]:checked').value; const categories = selectedType === 'income' ? incomeCategories : expenseCategories; categorySelect.innerHTML = categories.map(cat => `<option value="${cat.name}">${cat.name}</option>`).join(''); updateSubcategoryOptions(); };
+        const handleAddMainCategory = () => { const newCategoryName = addCategoryNameInput.value.trim(); if (!newCategoryName) return; const selectedType = document.querySelector('input[name="type"]:checked').value; const categories = selectedType === 'income' ? incomeCategories : expenseCategories; if (!categories.find(c => c.name === newCategoryName)) { categories.push({ name: newCategoryName, subcategories: [] }); updateCategoryOptions(); categorySelect.value = newCategoryName; } closeCategoryModal(); };
+        const handleAddSubcategory = () => { const newSubcategoryName = addCategoryNameInput.value.trim(); if (!newSubcategoryName) return; const selectedType = document.querySelector('input[name="type"]:checked').value; const categories = selectedType === 'income' ? incomeCategories : expenseCategories; const selectedCategoryName = categorySelect.value; const mainCategory = categories.find(c => c.name === selectedCategoryName); if (mainCategory && !mainCategory.subcategories.includes(newSubcategoryName)) { mainCategory.subcategories.push(newSubcategoryName); updateSubcategoryOptions(); subcategorySelect.value = newSubcategoryName; } closeCategoryModal(); };
+        const handleAddAssetGroup = () => { const newGroup = newAssetGroupInput.value.trim(); if (newGroup && !assetGroups.includes(newGroup)) { assetGroups.push(newGroup); renderAssetGroups(); newAssetGroupInput.value = ''; } };
+        const handleDeleteAssetGroup = (groupName) => { if (assets.some(asset => asset.group === groupName)) { alert('해당 그룹에 속한 자산이 있습니다. 자산을 먼저 삭제하거나 다른 그룹으로 이동해주세요.'); return; } assetGroups = assetGroups.filter(g => g !== groupName); renderAssetGroups(); };
+        const handleAddAsset = (e) => { e.preventDefault(); const newAsset = { id: Date.now(), group: e.target.elements['asset-group-select'].value, name: e.target.elements['asset-name-input'].value, initialAmount: +e.target.elements['asset-initial-amount-input'].value, memo: e.target.elements['asset-memo-input'].value }; assets.push(newAsset); renderAssetsList(); e.target.reset(); };
+        const handleDeleteAsset = (assetId) => { assets = assets.filter(a => a.id !== assetId); renderAssetsList(); };
+        const openModalAnimator = (modalEl, contentEl) => { modalEl.classList.remove('hidden'); requestAnimationFrame(() => { contentEl.classList.remove('modal-enter'); contentEl.classList.add('modal-enter-active'); }); };
+        const closeModalAnimator = (modalEl, contentEl) => { contentEl.classList.remove('modal-enter-active'); contentEl.classList.add('modal-exit-active'); setTimeout(() => { modalEl.classList.add('hidden'); contentEl.classList.remove('modal-exit-active'); contentEl.classList.add('modal-enter'); }, 300); };
+        const openTransactionModal = () => { transactionForm.reset(); document.getElementById('date').value = new Date().toISOString().split('T')[0]; updateCategoryOptions(); openModalAnimator(modal, modalContent); };
+        const closeTransactionModal = () => closeModalAnimator(modal, modalContent);
+        const openSettingsModal = () => { fileNameDisplay.textContent = ''; importFileInput.value = ''; openModalAnimator(settingsModal, settingsModalContent); };
+        const closeSettingsModal = () => closeModalAnimator(settingsModal, settingsModalContent);
+        const openCategoryModal = (type) => { categoryModalContext.type = type; addCategoryForm.reset(); if (type === 'main') { categoryModalTitle.textContent = '새 기본 카테고리'; } else { const selectedMainCategory = categorySelect.value; categoryModalTitle.textContent = `'${selectedMainCategory}'의 세부 카테고리`; } openModalAnimator(categoryModal, categoryModalContent); };
+        const closeCategoryModal = () => closeModalAnimator(categoryModal, categoryModalContent);
+        const handleFormSubmit = (event) => { event.preventDefault(); transactions.push({ id: Date.now(), type: event.target.elements.type.value, description: event.target.elements.description.value, amount: +event.target.elements.amount.value, date: event.target.elements.date.value, category: event.target.elements.category.value, subcategory: event.target.elements.subcategory.value || null }); renderSummary(); renderTransactionList(); closeTransactionModal(); };
+        const handleFileImport = (event) => { const file = event.target.files[0]; if (!file) return; fileNameDisplay.textContent = `"${file.name}" 파일이 선택되었습니다.`; setTimeout(() => { alert(`[시뮬레이션] '${file.name}' 파일에서 2개의 내역을 가져왔습니다.`); [{ id: Date.now() + 1, description: '카드값(파일)', amount: 350000, date: '2025-09-05', type: 'expense', category: '카드대금', subcategory: null }, { id: Date.now() + 2, description: '온라인쇼핑(파일)', amount: 78000, date: '2025-09-06', type: 'expense', category: '쇼핑', subcategory: '생활용품' }].forEach(t => { const categories = t.type === 'expense' ? expenseCategories : incomeCategories; if (!categories.find(c => c.name === t.category)) categories.push({ name: t.category, subcategories: [] }); transactions.push(t); }); renderSummary(); renderTransactionList(); closeSettingsModal(); }, 500); };
+
+        // --- 이벤트 리스너 설정 ---
+        navButtons.forEach(btn => btn.addEventListener('click', () => showPage(btn.dataset.page)));
+        statsTabs.addEventListener('click', (e) => { const button = e.target.closest('.stats-tab-btn'); if (button) handleStatsTabClick(button.dataset.tab); });
+        addTransactionBtn.addEventListener('click', openTransactionModal);
+        closeModalBtn.addEventListener('click', closeTransactionModal);
+        modal.addEventListener('click', (e) => { if (e.target === modal) closeTransactionModal(); });
+        transactionForm.addEventListener('submit', handleFormSubmit);
+        typeRadios.forEach(radio => radio.addEventListener('change', updateCategoryOptions));
+        categorySelect.addEventListener('change', updateSubcategoryOptions);
+        openAddMainCategoryModalBtn.addEventListener('click', () => openCategoryModal('main'));
+        openAddSubcategoryModalBtn.addEventListener('click', () => openCategoryModal('sub'));
+        closeCategoryModalBtn.addEventListener('click', closeCategoryModal);
+        categoryModal.addEventListener('click', (e) => { if (e.target === categoryModal) closeCategoryModal(); });
+        addCategoryForm.addEventListener('submit', (e) => { e.preventDefault(); if (categoryModalContext.type === 'main') { handleAddMainCategory(); } else if (categoryModalContext.type === 'sub') { handleAddSubcategory(); } });
+        settingsBtn.addEventListener('click', openSettingsModal);
+        closeSettingsModalBtn.addEventListener('click', closeSettingsModal);
+        settingsModal.addEventListener('click', (e) => { if (e.target === settingsModal) closeSettingsModal(); });
+        importFileInput.addEventListener('change', handleFileImport);
+        addAssetGroupBtn.addEventListener('click', handleAddAssetGroup);
+        newAssetGroupInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); handleAddAssetGroup(); } });
+        addAssetForm.addEventListener('submit', handleAddAsset);
+        assetGroupsList.addEventListener('click', (e) => { if (e.target.closest('button')?.dataset.group) { handleDeleteAssetGroup(e.target.closest('button').dataset.group); } });
+        assetsList.addEventListener('click', (e) => { if (e.target.closest('button')?.dataset.id) { handleDeleteAsset(parseInt(e.target.closest('button').dataset.id, 10)); } });
+
+        // --- 앱 초기화 ---
+        document.addEventListener('DOMContentLoaded', () => {
+            renderSummary();
+            renderTransactionList();
+            showPage('home-page');
+        });
+    </script>
 </body>
 </html>
 
