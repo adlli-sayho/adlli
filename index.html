@@ -96,12 +96,14 @@
                     <div id="stats-charts-content" class="space-y-4">
                         <div class="mb-4"><label for="stats-asset-filter" class="block text-sm font-medium text-gray-700 dark:text-gray-300">자산별 필터</label><select id="stats-asset-filter" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white"><option value="all">모든 자산</option></select></div>
                         <div class="p-4 bg-gray-50 rounded-lg"><canvas id="transactionChart"></canvas></div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="grid grid-cols-2 gap-4">
                             <div class="p-4 bg-gray-50 rounded-lg"><canvas id="incomeCategoryChart"></canvas></div>
                             <div class="p-4 bg-gray-50 rounded-lg"><canvas id="expenseCategoryChart"></canvas></div>
                         </div>
-                        <div class="p-4 bg-gray-50 rounded-lg"><canvas id="assetIncomeChartCanvas"></canvas></div>
-                        <div class="p-4 bg-gray-50 rounded-lg"><canvas id="assetExpenseChartCanvas"></canvas></div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="p-4 bg-gray-50 rounded-lg"><canvas id="assetIncomeChartCanvas"></canvas></div>
+                            <div class="p-4 bg-gray-50 rounded-lg"><canvas id="assetExpenseChartCanvas"></canvas></div>
+                        </div>
                     </div>
                     <div id="stats-history-content" class="hidden">
                         <ul id="stats-transaction-list" class="space-y-3"></ul>
@@ -122,7 +124,7 @@
                     <div class="border-t pt-4"><label class="block text-gray-700 font-semibold mb-2">새 자산 추가</label><form id="add-asset-form"><div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-2"><select id="asset-group-select" required class="w-full p-2 border border-gray-300 rounded-lg"></select><input type="text" id="asset-name-input" placeholder="자산 이름" required class="w-full p-2 border border-gray-300 rounded-lg"></div><div id="card-options" class="hidden space-y-2 mb-2"><div><label class="block text-gray-700 text-sm font-semibold mb-1">카드 종류</label><div class="flex gap-4"><label class="flex items-center"><input type="radio" name="card-type" value="credit" class="form-radio" checked> <span class="ml-2 text-sm">신용카드</span></label><label class="flex items-center"><input type="radio" name="card-type" value="debit" class="form-radio"> <span class="ml-2 text-sm">체크카드</span></label></div></div><div id="link-bank-account-section" class="hidden"><label for="linked-bank-account-select" class="block text-gray-700 text-sm font-semibold mb-1">연결된 은행 계좌</label><select id="linked-bank-account-select" class="w-full p-2 border border-gray-300 rounded-lg text-sm"></select></div></div><input type="number" id="asset-initial-amount-input" placeholder="초기 금액" required class="w-full p-2 border border-gray-300 rounded-lg mb-2"><textarea id="asset-memo-input" placeholder="메모" rows="2" class="w-full p-2 border border-gray-300 rounded-lg mb-2"></textarea><button type="submit" class="w-full bg-indigo-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-600 transition duration-300">자산 추가</button></form></div>
                     <div class="mt-4 border-t pt-4">
                         <h4 class="font-semibold text-gray-600 mb-2">자산 목록</h4>
-                        <div id="assets-list" class="space-y-4"></div>
+                        <div id="assets-list" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
                     </div>
                 </div>
             </div>
@@ -191,7 +193,7 @@
         import { getAuth, signInAnonymously, onAuthStateChanged, GoogleAuthProvider, EmailAuthProvider, linkWithCredential, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithRedirect, getRedirectResult } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
         // ===================================================================================
-        const firebaseConfig = {
+    const firebaseConfig = {
             apiKey: "AIzaSyChoYhcEbrhx-CXKpdx8b8xkC0-fgD21bI",
             authDomain: "hous-ee57f.firebaseapp.com",
             projectId: "hous-ee57f",
