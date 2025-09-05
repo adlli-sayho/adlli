@@ -292,7 +292,7 @@
         // Firebase SDK (Software Development Kit)를 불러옵니다.
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getFirestore, collection, doc, getDoc, setDoc, addDoc, onSnapshot, deleteDoc, updateDoc, writeBatch, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged, GoogleAuthProvider, EmailAuthProvider, linkWithCredential, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithRedirect, getRedirectResult } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged, GoogleAuthProvider, EmailAuthProvider, linkWithCredential, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
         // ===================================================================================
         // [중요] 보안을 위해 실제 키 값은 삭제했습니다.
@@ -370,10 +370,31 @@
             const openCategoryModal = (type) => { categoryModalContext.type = type; addCategoryForm.reset(); if (type === 'main') { categoryModalTitle.textContent = '새 기본 카테고리'; } else { const selectedMainCategory = categorySelect.value; categoryModalTitle.textContent = `'${selectedMainCategory}'의 세부 카테고리`; } openModalAnimator(categoryModal, categoryModalContent); };
             const closeCategoryModal = () => closeModalAnimator(categoryModal, categoryModalContent);
             const handleFormSubmit = async (event) => { event.preventDefault(); const id = event.target.elements['transaction-id'].value; const type = event.target.elements.type.value; let transactionData = { type, description: event.target.elements.description.value, amount: +event.target.elements.amount.value, date: event.target.elements.date.value, }; if (isInstallmentCheckbox.checked) { transactionData.isInstallment = true; transactionData.currentInstallment = +document.getElementById('current-installment').value; transactionData.totalInstallments = +document.getElementById('total-installments').value; if (!transactionData.currentInstallment || !transactionData.totalInstallments || transactionData.currentInstallment > transactionData.totalInstallments) { alert('올바른 할부 정보를 입력해주세요.'); return; } } else { transactionData.isInstallment = false; } if (type === 'transfer') { transactionData.fromAssetId = fromAssetSelect.value; transactionData.toAssetId = toAssetSelect.value; if (transactionData.fromAssetId === transactionData.toAssetId) { alert('보내는 자산과 받는 자산은 같을 수 없습니다.'); return; } } else { transactionData.category = categorySelect.value; transactionData.subcategory = subcategorySelect.value || null; transactionData.assetId = transactionAssetSelect.value || null; } if (id) { const docRef = doc(db, `users/${currentUserId}/transactions/${id}`); await updateDoc(docRef, transactionData); } else { await addDoc(getRefs().transactionsCol, transactionData); } closeTransactionModal(); };
-            const handleGoogleSignIn = async () => { loadingText.textContent = 'Google 로그인 페이지로 이동합니다...'; loadingOverlay.style.opacity = '1'; loadingOverlay.style.display = 'flex'; const provider = new GoogleAuthProvider(); signInWithRedirect(auth, provider); };
-            const handleEmailPasswordAuth = async (e) => { e.preventDefault(); const email = document.getElementById('email-input').value; const password = document.getElementById('password-input').value; try { const userCredential = await signInWithEmailAndPassword(auth, email, password); closeModalAnimator(authModal, authModalContent); } catch(error) { if (error.code === 'auth/user-not-found') { try { const userCredential = await createUserWithEmailAndPassword(auth, email, password); closeModalAnimator(authModal, authModalContent); } catch (createError) { alert(`회원가입 실패: ${createError.message}`); } } else if (error.code === 'auth/wrong-password') { alert('비밀번호가 틀렸습니다.'); } else { console.error("Email auth error", error); alert(`오류 발생: ${error.message}`); } } };
-            const handleBackup = async () => { loadingText.textContent = '데이터를 준비 중입니다...'; loadingOverlay.style.opacity = '1'; loadingOverlay.style.display = 'flex'; const { transactionsCol, assetsCol, appDataDoc } = getRefs(); const [transactionsSnap, assetsSnap, appDataSnap] = await Promise.all([getDocs(transactionsCol), getDocs(assetsCol), getDoc(appDataDoc)]); const backupData = { appData: appDataSnap.data(), transactions: transactionsSnap.docs.map(doc => doc.data()), assets: assetsSnap.docs.map(doc => doc.data()) }; const jsonString = JSON.stringify(backupData, null, 2); const blob = new Blob([jsonString], {type: "application/json"}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `my-ledger-backup-${new Date().toISOString().slice(0,10)}.json`; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url); loadingOverlay.style.opacity = '0'; setTimeout(() => { loadingOverlay.style.display = 'none'; }, 300); };
-            const handleFileSelectForRestore = (event) => { const file = event.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = (e) => { try { const parsedData = JSON.parse(e.target.result); if (parsedData.appData && Array.isArray(parsedData.transactions) && Array.isArray(parsedData.assets)) { dataToRestore = parsedData; document.getElementById('confirm-modal-title').textContent = '복원을 확인해주세요'; document.getElementById('confirm-modal-text').textContent = '정말로 데이터를 복원하시겠습니까? 현재 모든 데이터가 선택한 파일의 내용으로 대체됩니다. 이 작업은 되돌릴 수 없습니다.'; document.getElementById('confirm-action-btn').textContent = '복원'; confirmActionBtn.onclick = () => { closeModalAnimator(confirmModal, confirmModalContent); restoreData(); }; openModalAnimator(confirmModal, confirmModalContent); } else { alert('잘못된 백업 파일 형식입니다.'); } } catch (err) { alert('파일을 읽는 중 오류가 발생했습니다.'); console.error(err); } }; reader.readAsText(file); restoreFileInput.value = ''; };
+        const handleGoogleSignIn = async () => {
+            loadingText.textContent = 'Google 로그인 창을 열고 있습니다...';
+            loadingOverlay.style.opacity = '1';
+            loadingOverlay.style.display = 'flex';
+            const provider = new GoogleAuthProvider();
+            try {
+                // 로그인 방식을 리디렉션에서 팝업으로 변경하여 안정성을 높입니다.
+                // Firebase는 익명 사용자가 팝업으로 로그인하면 자동으로 계정을 업그레이드합니다.
+                await signInWithPopup(auth, provider);
+                closeModalAnimator(authModal, authModalContent);
+            } catch (error) {
+                console.error("Google sign in error", error);
+                if (error.code === 'auth/account-exists-with-different-credential') {
+                    alert('이미 다른 방식으로 가입된 이메일입니다. 다른 로그인 방식을 사용해주세요.');
+                } else {
+                     alert(`Google 로그인 중 오류가 발생했습니다: ${error.message}`);
+                }
+            } finally {
+                loadingOverlay.style.opacity = '0';
+                setTimeout(() => { loadingOverlay.style.display = 'none'; }, 300);
+            }
+        };
+        const handleEmailPasswordAuth = async (e) => { e.preventDefault(); const email = document.getElementById('email-input').value; const password = document.getElementById('password-input').value; try { const userCredential = await signInWithEmailAndPassword(auth, email, password); closeModalAnimator(authModal, authModalContent); } catch(error) { if (error.code === 'auth/user-not-found') { try { const userCredential = await createUserWithEmailAndPassword(auth, email, password); closeModalAnimator(authModal, authModalContent); } catch (createError) { alert(`회원가입 실패: ${createError.message}`); } } else if (error.code === 'auth/wrong-password') { alert('비밀번호가 틀렸습니다.'); } else { console.error("Email auth error", error); alert(`오류 발생: ${error.message}`); } } };
+        const handleBackup = async () => { loadingText.textContent = '데이터를 준비 중입니다...'; loadingOverlay.style.opacity = '1'; loadingOverlay.style.display = 'flex'; const { transactionsCol, assetsCol, appDataDoc } = getRefs(); const [transactionsSnap, assetsSnap, appDataSnap] = await Promise.all([getDocs(transactionsCol), getDocs(assetsCol), getDoc(appDataDoc)]); const backupData = { appData: appDataSnap.data(), transactions: transactionsSnap.docs.map(doc => doc.data()), assets: assetsSnap.docs.map(doc => doc.data()) }; const jsonString = JSON.stringify(backupData, null, 2); const blob = new Blob([jsonString], {type: "application/json"}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `my-ledger-backup-${new Date().toISOString().slice(0,10)}.json`; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url); loadingOverlay.style.opacity = '0'; setTimeout(() => { loadingOverlay.style.display = 'none'; }, 300); };
+        const handleFileSelectForRestore = (event) => { const file = event.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = (e) => { try { const parsedData = JSON.parse(e.target.result); if (parsedData.appData && Array.isArray(parsedData.transactions) && Array.isArray(parsedData.assets)) { dataToRestore = parsedData; document.getElementById('confirm-modal-title').textContent = '복원을 확인해주세요'; document.getElementById('confirm-modal-text').textContent = '정말로 데이터를 복원하시겠습니까? 현재 모든 데이터가 선택한 파일의 내용으로 대체됩니다. 이 작업은 되돌릴 수 없습니다.'; document.getElementById('confirm-action-btn').textContent = '복원'; confirmActionBtn.onclick = () => { closeModalAnimator(confirmModal, confirmModalContent); restoreData(); }; openModalAnimator(confirmModal, confirmModalContent); } else { alert('잘못된 백업 파일 형식입니다.'); } } catch (err) { alert('파일을 읽는 중 오류가 발생했습니다.'); console.error(err); } }; reader.readAsText(file); restoreFileInput.value = ''; };
             const restoreData = async () => { if (!dataToRestore) return; loadingText.textContent = '데이터 복원 중... 이 작업은 시간이 걸릴 수 있습니다.'; loadingOverlay.style.opacity = '1'; loadingOverlay.style.display = 'flex'; const { transactionsCol, assetsCol, appDataDoc } = getRefs(); const [transactionsSnap, assetsSnap] = await Promise.all([getDocs(transactionsCol), getDocs(assetsCol)]); const batch = writeBatch(db); transactionsSnap.forEach(doc => batch.delete(doc.ref)); assetsSnap.forEach(doc => batch.delete(doc.ref)); await batch.commit(); const newBatch = writeBatch(db); dataToRestore.transactions.forEach(tx => batch.set(doc(transactionsCol), tx)); dataToRestore.assets.forEach(asset => batch.set(doc(assetsCol), asset)); await batch.commit(); await setDoc(appDataDoc, dataToRestore.appData); dataToRestore = null; loadingOverlay.style.opacity = '0'; setTimeout(() => { loadingOverlay.style.display = 'none'; alert('데이터 복원이 완료되었습니다!'); }, 300); };
             const handleTransactionFileImport = (event) => { const file = event.target.files[0]; if (!file) return; loadingText.textContent = '파일을 분석 중입니다...'; loadingOverlay.style.opacity = '1'; loadingOverlay.style.display = 'flex'; const reader = new FileReader(); reader.onload = async (e) => { try { const text = e.target.result; const lines = text.split(/\r\n|\n/).filter(line => line.trim() !== ''); const newTransactions = []; for (const line of lines) { const parts = line.split(','); if (parts.length < 3) continue; const date = parts[0].trim(); const description = parts[1].trim(); let amount = parseFloat(parts[2].trim().replace(/[^0-9.-]+/g,"")); let type = 'expense'; if (parts.length >= 4 && (parts[3].trim().includes('수입') || parts[3].trim().includes('income'))) { type = 'income'; } else if (amount > 0) { type = 'income'; } amount = Math.abs(amount); let assetId = null; if (parts.length >= 5) { const assetName = parts[4].trim(); if (assetName) { const foundAsset = assets.find(a => a.name === assetName); if (foundAsset) { assetId = foundAsset.id; } else { console.warn(`Asset named "${assetName}" not found for line:`, line); } } } if (!date || !description || isNaN(amount)) { console.warn('Skipping invalid line:', line); continue; } if (!/^\d{4}[-.]\d{2}[-.]\d{2}$/.test(date.slice(0,10))) { console.warn('Skipping line with invalid date:', line); continue; } newTransactions.push({ date: date.slice(0,10).replace(/\./g, '-'), description, amount, type, category: '미분류', subcategory: null, assetId: assetId }); } if (newTransactions.length > 0) { if (!expenseCategories.find(c => c.name === '미분류')) { expenseCategories.push({ name: '미분류', subcategories: [] }); await updateDoc(getRefs().appDataDoc, { expenseCategories }); } if (!incomeCategories.find(c => c.name === '미분류')) { incomeCategories.push({ name: '미분류', subcategories: [] }); await updateDoc(getRefs().appDataDoc, { incomeCategories }); } loadingText.textContent = `${newTransactions.length}개의 내역을 저장 중입니다...`; const { transactionsCol } = getRefs(); const batch = writeBatch(db); newTransactions.forEach(tx => { const docRef = doc(transactionsCol); batch.set(docRef, tx); }); await batch.commit(); alert(`${newTransactions.length}개의 거래 내역을 성공적으로 가져왔습니다.`); } else { alert('파일에서 유효한 거래 내역을 찾을 수 없습니다.'); } } catch (err) { alert('파일을 처리하는 중 오류가 발생했습니다.'); console.error(err); } finally { loadingOverlay.style.opacity = '0'; setTimeout(() => { loadingOverlay.style.display = 'none'; }, 300); } }; reader.readAsText(file); };
             const handleTypeChange = () => { const selectedType = transactionForm.elements.type.value; const isTransfer = selectedType === 'transfer'; const isIncome = selectedType === 'income'; categorySection.style.display = isTransfer ? 'none' : 'block'; assetSection.style.display = isTransfer ? 'none' : 'block'; transferSection.style.display = isTransfer ? 'block' : 'none'; installmentSection.style.display = isTransfer || isIncome ? 'none' : 'block'; updateCategoryOptions(); };
@@ -441,23 +462,23 @@
 
             // --- 앱 초기화 ---
             onAuthStateChanged(auth, async (user) => {
-                if (!settingsModal.classList.contains('hidden')) {
-                    renderAccountInfo(user);
-                }
-                
                 if (user) {
-                    if (currentUserId === user.uid) {
-                        renderAccountInfo(user);
-                        return;
-                    }
+                    const isNewUser = currentUserId !== user.uid;
                     currentUserId = user.uid;
+
+                    // 로그인 상태가 변경될 때마다(예: 익명 -> 구글) 항상 계정 정보를 다시 그립니다.
                     renderAccountInfo(user);
 
-                    await initializeUserData();
-                    setupRealtimeListeners();
+                    if (isNewUser) {
+                        // 새로운 사용자(첫 실행 시 익명 사용자)일 때만 데이터 초기화 및 리스너 설정을 합니다.
+                        await initializeUserData();
+                        setupRealtimeListeners();
+                    }
+
                     loadingOverlay.style.opacity = '0';
                     setTimeout(() => { loadingOverlay.style.display = 'none'; }, 300);
                 } else {
+                    // 사용자가 없는 경우(로그아웃 또는 익명 로그인 실패) 익명 로그인을 시도합니다.
                     signInAnonymously(auth).catch((error) => {
                         console.error("Anonymous sign-in failed:", error);
                         const loadingSpinner = loadingOverlay.querySelector('svg');
@@ -477,25 +498,6 @@
                         loadingText.innerHTML = `<div class="text-center p-4"><h2 class="text-xl font-bold text-red-600 mb-4">${title}</h2><p class="text-gray-600 dark:text-gray-400 mt-2 text-sm">${message}</p></div>`;
                     });
                 }
-            });
-
-            getRedirectResult(auth).catch((error) => {
-                    console.error("Google redirect sign in error", error);
-                    const loadingSpinner = loadingOverlay.querySelector('svg');
-                    if(loadingSpinner) loadingSpinner.style.display = 'none';
-                    let title = "로그인 오류!";
-                    let message = `로그인 중 오류가 발생했습니다: ${error.message}`;
-                    if (error.code === 'auth/account-exists-with-different-credential') {
-                        message = '이미 다른 방식으로 가입된 이메일입니다. 다른 로그인 방식을 사용해주세요.';
-                    } else if (error.code === 'auth/unauthorized-domain') {
-                         title = "도메인 승인 필요!";
-                        message = `현재 앱의 도메인이 Firebase에 등록되지 않았습니다.<br><br>
-                                    <strong class="font-bold">Firebase 콘솔 &gt; Authentication &gt; Settings &gt; 승인된 도메인</strong><br>
-                                    메뉴에서 '도메인 추가'를 누르고<br>
-                                    아래 도메인을 추가해주세요:<br>
-                                    <code class="bg-gray-200 dark:bg-gray-700 p-1 rounded mt-1 inline-block">${window.location.hostname}</code>`;
-                    }
-                    loadingText.innerHTML = `<div class="text-center p-4"><h2 class="text-xl font-bold text-red-600 mb-4">${title}</h2><p class="text-gray-600 dark:text-gray-400 mt-2 text-sm">${message}</p></div>`;
             });
             
             document.addEventListener('DOMContentLoaded', () => {
